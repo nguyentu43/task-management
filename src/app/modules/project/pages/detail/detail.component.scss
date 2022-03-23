@@ -1,0 +1,17 @@
+.project-detail{
+    background-color: white;
+    &__header{
+        padding: 16px;
+        font-size: 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__content{
+        flex-wrap: nowrap;
+        max-height: 410px;
+        overflow-y: auto;
+    }
+    overflow-x: auto;
+}

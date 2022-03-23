@@ -1,0 +1,23 @@
+<nz-card [nzTitle]="titleTpl">
+    <nz-descriptions
+      nzTitle="Descriptions"
+      nzBordered
+      [nzColumn]="1"
+    >
+      <nz-descriptions-item nzTitle="Information">
+          {{ project.description }}
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Owner">
+        <app-avatar-group [participants]="[project.owner!]" ></app-avatar-group>
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Participants">
+        <app-avatar-group [participants]="project.participants!" ></app-avatar-group>
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Updated at">
+          {{ project.updated_at | date:'short' }}
+      </nz-descriptions-item>
+    </nz-descriptions>
+</nz-card>
+<ng-template #titleTpl>
+    <a [routerLink]="['/projects', project.id]"  class="card-title">{{ project.title }}</a>
+</ng-template>

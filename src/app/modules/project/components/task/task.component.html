@@ -1,0 +1,19 @@
+<div class="task">
+    <div class="task__header">
+        {{ task?.title }}
+    </div>
+    <div class="task__description">
+        <p>{{ task?.description }}</p>
+        <p>
+            <nz-avatar
+            nzShape="square"
+            [nzSrc]="task?.owner?.picture"
+            ></nz-avatar>
+        </p>
+        <p nz-typography nzType="warning">
+            <i nz-icon nzType="calendar" nzTheme="outline"></i>
+            {{ task?.due_datetime | date: 'short' }}
+        </p>
+        <app-task-modal [task]="task"></app-task-modal>
+    </div>
+</div>

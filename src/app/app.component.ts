@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
+import { AuthService } from './core/services/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'task-management';
+export class AppComponent{
+  title = 'task-management'
+  constructor(auth:AuthService){
+    auth.handleAuthentication();
+  }
 }

@@ -1,0 +1,49 @@
+<div class="section" [ngStyle]="{ 'border-color': section?.color}">
+    <div class="section__header" [ngStyle]="{'background-color': section?.color}">
+        <input 
+            nz-tooltip
+            nzTooltipTitle="Click to edit title"
+            nz-input
+            nzBorderless 
+            [ngModel]="section?.name" 
+            (ngModelChange)="changeSection({ name: $event})" />
+        <div style="display:flex">
+            <button 
+            nz-button
+            nzShape="circle"
+            nz-popover
+            [nzPopoverTrigger]="'click'"
+            [(nzPopoverVisible)]="popupVisible"
+            nzPopoverTitle="Change section"
+            [nzPopoverContent]="popupTpl"
+            nzPopoverPlacement="bottom"
+            style="margin-right: 5px"
+            >
+                <i nz-icon nzType="setting" nzTheme="outline"></i>
+        </button>
+        <button
+        nzShape="circle"
+            nz-button> 
+            <i nz-icon nzType="plus" nzTheme="outline"></i>
+        </button>
+        </div>
+    </div>
+    <div class="section__content">
+        <div *ngFor="let task of section?.tasks" class="task">
+            <app-task [task]="task"></app-task>
+        </div>
+        <div class="task" *ngIf="section?.tasks?.length === 0">
+            <app-empty-data description="Add new task"></app-empty-data>
+        </div>
+    </div>
+</div>
+<ng-template #popupTpl>
+    <span 
+    class="color-circle" 
+    *ngFor="let color of colors"
+    (click)="changeSection({ 'color': color })" 
+    [ngStyle]="{ 'background-color': color }"></span>
+    <br/>
+    <button nz-button (click)="popupVisible = false" style="margin-right: 5px">Close</button>
+    <button nz-button (click)="removeSection()" nzDanger>Remove</button>
+</ng-template>

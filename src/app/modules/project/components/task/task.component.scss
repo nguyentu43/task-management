@@ -1,0 +1,11 @@
+.task{
+    border: 1px solid #eee;
+    padding: 10px;
+    &__header{
+        font-size: 18px;
+        font-weight: bold;
+    }
+    &__description{
+        font-size: 16px;
+    }
+}

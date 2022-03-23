@@ -1,0 +1,28 @@
+<div nz-row nzGutter="4" class="dashboard">
+    <div nz-col nzFlex="2">
+        <h3 nz-typography >{{ nowDateTime | date:'fullDate' }}</h3>
+        <div id="shortTime">{{ nowDateTime | date: 'shortTime' }}</div>
+    </div>
+    <div nz-col nzFlex="3" class="project-list">
+        <h3 nz-typography>My projects</h3>
+        <ng-container *ngIf="api.apiProjectsList() | async as projects; else loading">
+            <ng-container *ngIf="projects.length > 0; else empty">
+                <div *ngFor="let project of projects" class="card-wrapper">
+                    <app-project-card [project]="project"></app-project-card>
+                </div>
+            </ng-container>
+            <ng-template #empty>
+                <app-empty-data 
+                description="Project Empty" 
+                [routerLink]="['/projects/create']"></app-empty-data>
+            </ng-template>
+        </ng-container>
+        <ng-template #loading>
+            <div nz-row>
+                <nz-skeleton [nzActive]="true"></nz-skeleton>
+                <nz-skeleton [nzActive]="true"></nz-skeleton>
+                <nz-skeleton [nzActive]="true"></nz-skeleton>
+            </div>
+        </ng-template>
+    </div>
+</div>

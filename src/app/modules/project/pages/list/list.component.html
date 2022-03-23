@@ -1,0 +1,52 @@
+<div class="list-project">
+    <ng-container *ngIf="api.apiProjectsList() | async as projects; else loading">
+        <ng-container *ngIf="projects.length > 0; else empty">
+            <div class="header">
+                <h2 nz-typography>Your projects</h2>
+                <a nz-button nzShape="circle" [routerLink]="['/projects/create']">
+                    <i nz-icon nzType="plus" nzTheme="outline"></i>
+                </a>
+            </div>
+            
+            <div nz-row nzGutter="8">
+                <div nz-col nzSpan="8" *ngFor="let project of projects" class="project">
+                    <app-project-card [project]="project" ></app-project-card>
+                </div>
+            </div>
+        </ng-container>
+        <ng-template #empty>
+            <app-empty-data description="Create a new project" [routerLink]="['/projects/create']"></app-empty-data>
+        </ng-template>
+    </ng-container>
+    <ng-template #loading>
+        <div nz-row nzGutter="8">
+            <div nz-col nzSpan="8">
+                <nz-skeleton></nz-skeleton>
+            </div>
+            <div nz-col nzSpan="8">
+                <nz-skeleton></nz-skeleton>
+            </div>
+            <div nz-col nzSpan="8">
+                <nz-skeleton></nz-skeleton>
+            </div>
+            <div nz-col nzSpan="8">
+                <nz-skeleton></nz-skeleton>
+            </div>
+            <div nz-col nzSpan="8">
+                <nz-skeleton></nz-skeleton>
+            </div>
+            <div nz-col nzSpan="8">
+                <nz-skeleton></nz-skeleton>
+            </div>
+            <div nz-col nzSpan="8">
+                <nz-skeleton></nz-skeleton>
+            </div>
+            <div nz-col nzSpan="8">
+                <nz-skeleton></nz-skeleton>
+            </div>
+            <div nz-col nzSpan="8">
+                <nz-skeleton></nz-skeleton>
+            </div>
+        </div>
+    </ng-template>    
+</div>

@@ -1,0 +1,42 @@
+<div class="project-detail">
+    <div class="project-detail__header">
+        <div>{{ project.title }}</div>
+        <div>
+            <a [routerLink]="['/projects', project.id, 'edit']" nz-button nzShape="circle">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+            </a>
+        </div>
+    </div>
+    <ng-container *ngIf="!isLoading; else loadingTpl">
+        <div nz-row class="project-detail__content">
+            <div 
+            nz-col 
+            nzSpan="8" 
+            *ngFor="let section of sections" 
+            >
+                <app-section [section]="section" [projectPk]="project.id + ''"></app-section>
+            </div>
+        </div>
+    </ng-container>
+    <ng-template #loadingTpl>
+        <div nz-row class="project-detail__content" [nzGutter]="8">
+            <div 
+            nz-col 
+            nzSpan="8"
+            >
+            <nz-skeleton></nz-skeleton>
+        </div>
+        <div 
+            nz-col 
+            nzSpan="8"
+            >
+            <nz-skeleton></nz-skeleton>
+        </div><div 
+        nz-col 
+        nzSpan="8"
+        >
+        <nz-skeleton></nz-skeleton>
+    </div>
+        </div>
+    </ng-template>
+</div>

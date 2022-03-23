@@ -1,0 +1,49 @@
+<nz-layout id="main-layout">
+  <nz-sider [hidden]="isCollapsed" [nzTrigger]="null">
+    <div class="logo" nz-typography [nzEllipsis]="true">
+      <a routerLink="/home">Task Management</a>
+    </div>
+    <ul nz-menu nzTheme="dark" [hidden]="isCollapsed" nzMode="inline" *ngFor="let submenu of siderMenu">
+      <ng-container *ngIf="!!submenu.children; else menuItemTemplate">
+        <li nz-submenu [nzTitle]="submenu.title" [nzIcon]="submenu.icon">
+          <ul *ngFor="let item of submenu.children">
+            <li nz-menu-item>
+              <i nz-icon [nzType]="item.icon"></i>
+              <span [routerLink]="[item.link]" >{{ item.title }}</span>
+            </li>
+          </ul>
+        </li>
+      </ng-container>
+      <ng-template #menuItemTemplate>
+        <li nz-menu-item nz-tooltip nzTooltipPlacement="right" [nzTooltipTitle]="isCollapsed ? submenu.title : ''">
+          <i nz-icon [nzType]="submenu.icon"></i>
+          <span [routerLink]="[submenu.link]" >{{ submenu.title }}</span>
+        </li>
+      </ng-template>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header nz-row [nzAlign]="'middle'" [nzJustify]="'space-between'">
+      <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+        (click)="isCollapsed = !isCollapsed"></i>
+      <div *ngIf="profileState$ | async as profileState">
+        <div [hidden]="!profileState.isLogin">
+        <nz-button-group>
+        <button nz-button>{{ profileState.data?.nickname }}</button>
+        <button nz-button nz-dropdown [nzDropdownMenu]="menu1" nzPlacement="bottomRight">
+          <nz-avatar nzIcon="user" nzShape="square" nzSize="small" [nzSrc]="profileState.data?.picture"></nz-avatar>
+        </button>
+      </nz-button-group>
+      <nz-dropdown-menu #menu1="nzDropdownMenu">
+        <ul nz-menu>
+          <li nz-menu-item (click)="logout()">Logout</li>
+        </ul>
+      </nz-dropdown-menu></div>
+    </div>
+    </nz-header>
+    <nz-content>
+        <router-outlet></router-outlet>
+    </nz-content>
+    <nz-footer>Task Management</nz-footer>
+  </nz-layout>
+</nz-layout>

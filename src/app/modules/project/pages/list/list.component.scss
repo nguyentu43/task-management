@@ -1,0 +1,13 @@
+.list-project{
+    padding: 10px 10px 0 10px;
+    background-color: white;
+    overflow: auto;
+    max-height: 480px;
+    .project{
+        margin-bottom: 10px;
+    }
+    .header{
+        display: flex;
+        justify-content: space-between;
+    }
+}

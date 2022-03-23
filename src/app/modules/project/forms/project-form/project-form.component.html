@@ -1,0 +1,25 @@
+<form nz-form [formGroup]="form" (ngSubmit)="submit()">
+    <nz-form-item>
+        <nz-form-label [nzSm]="4" [nzXs]="24" nzRequired nzFor="title">Title</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="The input is required">
+          <input nz-input formControlName="title" id="title" />
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="4" [nzXs]="24" nzFor="description">Description</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <textarea rows="6" nz-input formControlName="description" id="description"></textarea>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="4" [nzXs]="24">Participants</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+            <app-profile-select [initialProfiles]="project?.participants" formControlName="participants"></app-profile-select>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item nz-row>
+        <nz-form-control [nzSpan]="14" [nzOffset]="4">
+          <button [nzLoading]="isSubmitting" nz-button nzType="primary">Save</button>
+        </nz-form-control>
+      </nz-form-item>
+</form>

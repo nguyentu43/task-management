@@ -3,7 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  auth0Domain: 'dev-cvhtj2te.us.auth0.com',
+  auth0ClientId: '1qRRc2pfjWxzlqHSqNybZ5dZsciUt9xQ',
+  auth0Audience: 'task-management-api',
+  auth0RedirectUri: 'http://localhost:4200',
+  endpointApi: 'http://limitless-reaches-35266.herokuapp.com'
 };
 
 /*

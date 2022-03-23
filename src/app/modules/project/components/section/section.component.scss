@@ -1,0 +1,28 @@
+
+.section{
+    border-width: 1px;
+    border-style: solid;
+
+    &__header{
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+
+        input{
+            color: white;
+            padding: 0;
+            font-weight: bold;
+            font-size: 18px;
+        }
+    }
+
+    &__content{
+        padding: 10px 10px 0 10px;
+        .task{
+            margin-bottom: 10px;
+        }
+    }
+
+    
+}
+

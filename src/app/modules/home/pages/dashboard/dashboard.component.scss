@@ -1,0 +1,22 @@
+#shortTime{
+    font-size: 50px;
+}
+
+.card-wrapper{
+    margin-bottom: 10px;
+}
+
+.project-list{
+    background-color: #4da6ff;
+    padding: 10px !important;
+    h3{
+        color: white
+    }
+    overflow: auto;
+    max-height: 410px;
+}
+
+.dashboard{
+    padding: 16px;
+    background-color: white;
+}

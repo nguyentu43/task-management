@@ -1,0 +1,19 @@
+<button nz-button [nzType]="'primary'" (click)="showModal()"><span>Show Modal</span></button>
+    <nz-modal 
+    [nzWidth]="900" 
+    [(nzVisible)]="isVisible" 
+    (nzOnCancel)="handleCancel()" 
+    [nzTitle]="task?.title">
+      <ng-container *nzModalContent>
+        <div nz-row>
+            <div nz-col nzFlex="2">
+                <h3 nz-typography>{{ task?.title }}</h3>
+                <p>{{ task?.description }}</p>
+            </div>
+            <div nz-col nzFlex="1">
+                <p>Participants</p>
+            </div>
+        </div>
+      </ng-container>
+      <ng-container *nzModalFooter></ng-container>
+</nz-modal>

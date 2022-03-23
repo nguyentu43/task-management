@@ -1,0 +1,20 @@
+<nz-select
+      nzMode="multiple"
+      nzPlaceHolder="Select profiles"
+      nzAllowClear
+      nzShowSearch
+      nzServerSearch
+      [ngModel]="selectedProfiles"
+      (ngModelChange)="onModelChange($event)"
+      (nzOnSearch)="onSearch($event)"
+    >
+      <ng-container *ngFor="let p of profiles">
+        <nz-option *ngIf="!isLoading" [nzValue]="p.id" [nzLabel]="p.nickname" nzCustomContent>
+            <nz-avatar [nzSrc]="p.picture" [nzShape]="'square'"></nz-avatar> {{ p.nickname }}
+        </nz-option>
+      </ng-container>
+      <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+        <i nz-icon nzType="loading" class="loading-icon"></i>
+        Loading Data...
+      </nz-option>
+</nz-select>
