@@ -7,6 +7,7 @@ import { StrictHttpResponse as __StrictHttpResponse } from '../strict-http-respo
 import { Observable as __Observable } from 'rxjs';
 import { map as __map, filter as __filter } from 'rxjs/operators';
 
+import { Activity } from '../models/activity';
 import { Profile } from '../models/profile';
 import { Project } from '../models/project';
 import { Message } from '../models/message';
@@ -14,12 +15,12 @@ import { Section } from '../models/section';
 import { Tag } from '../models/tag';
 import { Task } from '../models/task';
 import { Comment } from '../models/comment';
-import { Reaction } from '../models/reaction';
 import { TodoItem } from '../models/todo-item';
 @Injectable({
   providedIn: 'root',
 })
 class ApiService extends __BaseService {
+  static readonly apiActivitiesListPath = '/api/activities/';
   static readonly apiProfilesCreatePath = '/api/profiles/';
   static readonly apiProfilesMeListPath = '/api/profiles/me/';
   static readonly apiProfilesSearchListPath = '/api/profiles/search/';
@@ -56,12 +57,6 @@ class ApiService extends __BaseService {
   static readonly apiProjectsTasksGetActivitiesPath = '/api/projects/{project_pk}/tasks/{id}/activities/';
   static readonly apiProjectsTasksCommentsListPath = '/api/projects/{project_pk}/tasks/{task_pk}/comments/';
   static readonly apiProjectsTasksCommentsCreatePath = '/api/projects/{project_pk}/tasks/{task_pk}/comments/';
-  static readonly apiProjectsTasksCommentsReactionsListPath = '/api/projects/{project_pk}/tasks/{task_pk}/comments/{comment_pk}/reactions/';
-  static readonly apiProjectsTasksCommentsReactionsCreatePath = '/api/projects/{project_pk}/tasks/{task_pk}/comments/{comment_pk}/reactions/';
-  static readonly apiProjectsTasksCommentsReactionsReadPath = '/api/projects/{project_pk}/tasks/{task_pk}/comments/{comment_pk}/reactions/{id}/';
-  static readonly apiProjectsTasksCommentsReactionsUpdatePath = '/api/projects/{project_pk}/tasks/{task_pk}/comments/{comment_pk}/reactions/{id}/';
-  static readonly apiProjectsTasksCommentsReactionsPartialUpdatePath = '/api/projects/{project_pk}/tasks/{task_pk}/comments/{comment_pk}/reactions/{id}/';
-  static readonly apiProjectsTasksCommentsReactionsDeletePath = '/api/projects/{project_pk}/tasks/{task_pk}/comments/{comment_pk}/reactions/{id}/';
   static readonly apiProjectsTasksCommentsReadPath = '/api/projects/{project_pk}/tasks/{task_pk}/comments/{id}/';
   static readonly apiProjectsTasksCommentsUpdatePath = '/api/projects/{project_pk}/tasks/{task_pk}/comments/{id}/';
   static readonly apiProjectsTasksCommentsPartialUpdatePath = '/api/projects/{project_pk}/tasks/{task_pk}/comments/{id}/';
@@ -72,12 +67,39 @@ class ApiService extends __BaseService {
   static readonly apiProjectsTasksTodoUpdatePath = '/api/projects/{project_pk}/tasks/{task_pk}/todo/{id}/';
   static readonly apiProjectsTasksTodoPartialUpdatePath = '/api/projects/{project_pk}/tasks/{task_pk}/todo/{id}/';
   static readonly apiProjectsTasksTodoDeletePath = '/api/projects/{project_pk}/tasks/{task_pk}/todo/{id}/';
+  static readonly apiTasksListPath = '/api/tasks/';
+  static readonly apiTodoItemsListPath = '/api/todo-items/';
 
   constructor(
     config: __Configuration,
     http: HttpClient
   ) {
     super(config, http);
+  }
+  apiActivitiesListResponse(): __Observable<__StrictHttpResponse<Array<Activity>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/activities/`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<Activity>>;
+      })
+    );
+  }  apiActivitiesList(): __Observable<Array<Activity>> {
+    return this.apiActivitiesListResponse().pipe(
+      __map(_r => _r.body as Array<Activity>)
+    );
   }
 
   /**
@@ -153,6 +175,8 @@ class ApiService extends __BaseService {
    *
    * - `email`:
    *
+   * - `project`:
+   *
    * @return get profiles
    */
   apiProfilesSearchListResponse(params: ApiService.ApiProfilesSearchListParams): __Observable<__StrictHttpResponse<Array<Profile>>> {
@@ -161,6 +185,7 @@ class ApiService extends __BaseService {
     let __body: any = null;
     if (params.nickname != null) __params = __params.set('nickname', params.nickname.toString());
     if (params.email != null) __params = __params.set('email', params.email.toString());
+    if (params.project != null) __params = __params.set('project', params.project.toString());
     let req = new HttpRequest<any>(
       'GET',
       this.rootUrl + `/api/profiles/search/`,
@@ -184,6 +209,8 @@ class ApiService extends __BaseService {
    * - `nickname`:
    *
    * - `email`:
+   *
+   * - `project`:
    *
    * @return get profiles
    */
@@ -407,16 +434,24 @@ class ApiService extends __BaseService {
   }
 
   /**
-   * @param project_pk undefined
+   * @param params The `ApiService.ApiProjectsMessagesListParams` containing the following parameters:
+   *
+   * - `project_pk`:
+   *
+   * - `offset`: The initial index from which to return the results.
+   *
+   * - `limit`: Number of results to return per page.
    */
-  apiProjectsMessagesListResponse(projectPk: string): __Observable<__StrictHttpResponse<Array<Message>>> {
+  apiProjectsMessagesListResponse(params: ApiService.ApiProjectsMessagesListParams): __Observable<__StrictHttpResponse<{count: number, next?: null | string, previous?: null | string, results: Array<Message>}>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
 
+    if (params.offset != null) __params = __params.set('offset', params.offset.toString());
+    if (params.limit != null) __params = __params.set('limit', params.limit.toString());
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/api/projects/${encodeURIComponent(String(projectPk))}/messages/`,
+      this.rootUrl + `/api/projects/${encodeURIComponent(String(params.projectPk))}/messages/`,
       __body,
       {
         headers: __headers,
@@ -427,16 +462,22 @@ class ApiService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<Array<Message>>;
+        return _r as __StrictHttpResponse<{count: number, next?: null | string, previous?: null | string, results: Array<Message>}>;
       })
     );
   }
   /**
-   * @param project_pk undefined
+   * @param params The `ApiService.ApiProjectsMessagesListParams` containing the following parameters:
+   *
+   * - `project_pk`:
+   *
+   * - `offset`: The initial index from which to return the results.
+   *
+   * - `limit`: Number of results to return per page.
    */
-  apiProjectsMessagesList(projectPk: string): __Observable<Array<Message>> {
-    return this.apiProjectsMessagesListResponse(projectPk).pipe(
-      __map(_r => _r.body as Array<Message>)
+  apiProjectsMessagesList(params: ApiService.ApiProjectsMessagesListParams): __Observable<{count: number, next?: null | string, previous?: null | string, results: Array<Message>}> {
+    return this.apiProjectsMessagesListResponse(params).pipe(
+      __map(_r => _r.body as {count: number, next?: null | string, previous?: null | string, results: Array<Message>})
     );
   }
 
@@ -1448,8 +1489,10 @@ class ApiService extends __BaseService {
    * - `project_pk`:
    *
    * - `id`:
+   *
+   * @return get activities
    */
-  apiProjectsTasksGetActivitiesResponse(params: ApiService.ApiProjectsTasksGetActivitiesParams): __Observable<__StrictHttpResponse<Task>> {
+  apiProjectsTasksGetActivitiesResponse(params: ApiService.ApiProjectsTasksGetActivitiesParams): __Observable<__StrictHttpResponse<Array<Activity>>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -1468,7 +1511,7 @@ class ApiService extends __BaseService {
     return this.http.request<any>(req).pipe(
       __filter(_r => _r instanceof HttpResponse),
       __map((_r) => {
-        return _r as __StrictHttpResponse<Task>;
+        return _r as __StrictHttpResponse<Array<Activity>>;
       })
     );
   }
@@ -1478,10 +1521,12 @@ class ApiService extends __BaseService {
    * - `project_pk`:
    *
    * - `id`:
+   *
+   * @return get activities
    */
-  apiProjectsTasksGetActivities(params: ApiService.ApiProjectsTasksGetActivitiesParams): __Observable<Task> {
+  apiProjectsTasksGetActivities(params: ApiService.ApiProjectsTasksGetActivitiesParams): __Observable<Array<Activity>> {
     return this.apiProjectsTasksGetActivitiesResponse(params).pipe(
-      __map(_r => _r.body as Task)
+      __map(_r => _r.body as Array<Activity>)
     );
   }
 
@@ -1573,329 +1618,6 @@ class ApiService extends __BaseService {
   apiProjectsTasksCommentsCreate(params: ApiService.ApiProjectsTasksCommentsCreateParams): __Observable<Comment> {
     return this.apiProjectsTasksCommentsCreateResponse(params).pipe(
       __map(_r => _r.body as Comment)
-    );
-  }
-
-  /**
-   * @param params The `ApiService.ApiProjectsTasksCommentsReactionsListParams` containing the following parameters:
-   *
-   * - `task_pk`:
-   *
-   * - `project_pk`:
-   *
-   * - `comment_pk`:
-   */
-  apiProjectsTasksCommentsReactionsListResponse(params: ApiService.ApiProjectsTasksCommentsReactionsListParams): __Observable<__StrictHttpResponse<Array<Reaction>>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-
-
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/api/projects/${encodeURIComponent(String(params.projectPk))}/tasks/${encodeURIComponent(String(params.taskPk))}/comments/${encodeURIComponent(String(params.commentPk))}/reactions/`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<Array<Reaction>>;
-      })
-    );
-  }
-  /**
-   * @param params The `ApiService.ApiProjectsTasksCommentsReactionsListParams` containing the following parameters:
-   *
-   * - `task_pk`:
-   *
-   * - `project_pk`:
-   *
-   * - `comment_pk`:
-   */
-  apiProjectsTasksCommentsReactionsList(params: ApiService.ApiProjectsTasksCommentsReactionsListParams): __Observable<Array<Reaction>> {
-    return this.apiProjectsTasksCommentsReactionsListResponse(params).pipe(
-      __map(_r => _r.body as Array<Reaction>)
-    );
-  }
-
-  /**
-   * @param params The `ApiService.ApiProjectsTasksCommentsReactionsCreateParams` containing the following parameters:
-   *
-   * - `task_pk`:
-   *
-   * - `project_pk`:
-   *
-   * - `data`:
-   *
-   * - `comment_pk`:
-   */
-  apiProjectsTasksCommentsReactionsCreateResponse(params: ApiService.ApiProjectsTasksCommentsReactionsCreateParams): __Observable<__StrictHttpResponse<Reaction>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-
-    __body = params.data;
-
-    let req = new HttpRequest<any>(
-      'POST',
-      this.rootUrl + `/api/projects/${encodeURIComponent(String(params.projectPk))}/tasks/${encodeURIComponent(String(params.taskPk))}/comments/${encodeURIComponent(String(params.commentPk))}/reactions/`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<Reaction>;
-      })
-    );
-  }
-  /**
-   * @param params The `ApiService.ApiProjectsTasksCommentsReactionsCreateParams` containing the following parameters:
-   *
-   * - `task_pk`:
-   *
-   * - `project_pk`:
-   *
-   * - `data`:
-   *
-   * - `comment_pk`:
-   */
-  apiProjectsTasksCommentsReactionsCreate(params: ApiService.ApiProjectsTasksCommentsReactionsCreateParams): __Observable<Reaction> {
-    return this.apiProjectsTasksCommentsReactionsCreateResponse(params).pipe(
-      __map(_r => _r.body as Reaction)
-    );
-  }
-
-  /**
-   * @param params The `ApiService.ApiProjectsTasksCommentsReactionsReadParams` containing the following parameters:
-   *
-   * - `task_pk`:
-   *
-   * - `project_pk`:
-   *
-   * - `id`:
-   *
-   * - `comment_pk`:
-   */
-  apiProjectsTasksCommentsReactionsReadResponse(params: ApiService.ApiProjectsTasksCommentsReactionsReadParams): __Observable<__StrictHttpResponse<Reaction>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-
-
-
-    let req = new HttpRequest<any>(
-      'GET',
-      this.rootUrl + `/api/projects/${encodeURIComponent(String(params.projectPk))}/tasks/${encodeURIComponent(String(params.taskPk))}/comments/${encodeURIComponent(String(params.commentPk))}/reactions/${encodeURIComponent(String(params.id))}/`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<Reaction>;
-      })
-    );
-  }
-  /**
-   * @param params The `ApiService.ApiProjectsTasksCommentsReactionsReadParams` containing the following parameters:
-   *
-   * - `task_pk`:
-   *
-   * - `project_pk`:
-   *
-   * - `id`:
-   *
-   * - `comment_pk`:
-   */
-  apiProjectsTasksCommentsReactionsRead(params: ApiService.ApiProjectsTasksCommentsReactionsReadParams): __Observable<Reaction> {
-    return this.apiProjectsTasksCommentsReactionsReadResponse(params).pipe(
-      __map(_r => _r.body as Reaction)
-    );
-  }
-
-  /**
-   * @param params The `ApiService.ApiProjectsTasksCommentsReactionsUpdateParams` containing the following parameters:
-   *
-   * - `task_pk`:
-   *
-   * - `project_pk`:
-   *
-   * - `id`:
-   *
-   * - `data`:
-   *
-   * - `comment_pk`:
-   */
-  apiProjectsTasksCommentsReactionsUpdateResponse(params: ApiService.ApiProjectsTasksCommentsReactionsUpdateParams): __Observable<__StrictHttpResponse<Reaction>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-
-
-    __body = params.data;
-
-    let req = new HttpRequest<any>(
-      'PUT',
-      this.rootUrl + `/api/projects/${encodeURIComponent(String(params.projectPk))}/tasks/${encodeURIComponent(String(params.taskPk))}/comments/${encodeURIComponent(String(params.commentPk))}/reactions/${encodeURIComponent(String(params.id))}/`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<Reaction>;
-      })
-    );
-  }
-  /**
-   * @param params The `ApiService.ApiProjectsTasksCommentsReactionsUpdateParams` containing the following parameters:
-   *
-   * - `task_pk`:
-   *
-   * - `project_pk`:
-   *
-   * - `id`:
-   *
-   * - `data`:
-   *
-   * - `comment_pk`:
-   */
-  apiProjectsTasksCommentsReactionsUpdate(params: ApiService.ApiProjectsTasksCommentsReactionsUpdateParams): __Observable<Reaction> {
-    return this.apiProjectsTasksCommentsReactionsUpdateResponse(params).pipe(
-      __map(_r => _r.body as Reaction)
-    );
-  }
-
-  /**
-   * @param params The `ApiService.ApiProjectsTasksCommentsReactionsPartialUpdateParams` containing the following parameters:
-   *
-   * - `task_pk`:
-   *
-   * - `project_pk`:
-   *
-   * - `id`:
-   *
-   * - `data`:
-   *
-   * - `comment_pk`:
-   */
-  apiProjectsTasksCommentsReactionsPartialUpdateResponse(params: ApiService.ApiProjectsTasksCommentsReactionsPartialUpdateParams): __Observable<__StrictHttpResponse<Reaction>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-
-
-    __body = params.data;
-
-    let req = new HttpRequest<any>(
-      'PATCH',
-      this.rootUrl + `/api/projects/${encodeURIComponent(String(params.projectPk))}/tasks/${encodeURIComponent(String(params.taskPk))}/comments/${encodeURIComponent(String(params.commentPk))}/reactions/${encodeURIComponent(String(params.id))}/`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<Reaction>;
-      })
-    );
-  }
-  /**
-   * @param params The `ApiService.ApiProjectsTasksCommentsReactionsPartialUpdateParams` containing the following parameters:
-   *
-   * - `task_pk`:
-   *
-   * - `project_pk`:
-   *
-   * - `id`:
-   *
-   * - `data`:
-   *
-   * - `comment_pk`:
-   */
-  apiProjectsTasksCommentsReactionsPartialUpdate(params: ApiService.ApiProjectsTasksCommentsReactionsPartialUpdateParams): __Observable<Reaction> {
-    return this.apiProjectsTasksCommentsReactionsPartialUpdateResponse(params).pipe(
-      __map(_r => _r.body as Reaction)
-    );
-  }
-
-  /**
-   * @param params The `ApiService.ApiProjectsTasksCommentsReactionsDeleteParams` containing the following parameters:
-   *
-   * - `task_pk`:
-   *
-   * - `project_pk`:
-   *
-   * - `id`:
-   *
-   * - `comment_pk`:
-   */
-  apiProjectsTasksCommentsReactionsDeleteResponse(params: ApiService.ApiProjectsTasksCommentsReactionsDeleteParams): __Observable<__StrictHttpResponse<null>> {
-    let __params = this.newParams();
-    let __headers = new HttpHeaders();
-    let __body: any = null;
-
-
-
-
-    let req = new HttpRequest<any>(
-      'DELETE',
-      this.rootUrl + `/api/projects/${encodeURIComponent(String(params.projectPk))}/tasks/${encodeURIComponent(String(params.taskPk))}/comments/${encodeURIComponent(String(params.commentPk))}/reactions/${encodeURIComponent(String(params.id))}/`,
-      __body,
-      {
-        headers: __headers,
-        params: __params,
-        responseType: 'json'
-      });
-
-    return this.http.request<any>(req).pipe(
-      __filter(_r => _r instanceof HttpResponse),
-      __map((_r) => {
-        return _r as __StrictHttpResponse<null>;
-      })
-    );
-  }
-  /**
-   * @param params The `ApiService.ApiProjectsTasksCommentsReactionsDeleteParams` containing the following parameters:
-   *
-   * - `task_pk`:
-   *
-   * - `project_pk`:
-   *
-   * - `id`:
-   *
-   * - `comment_pk`:
-   */
-  apiProjectsTasksCommentsReactionsDelete(params: ApiService.ApiProjectsTasksCommentsReactionsDeleteParams): __Observable<null> {
-    return this.apiProjectsTasksCommentsReactionsDeleteResponse(params).pipe(
-      __map(_r => _r.body as null)
     );
   }
 
@@ -2393,6 +2115,56 @@ class ApiService extends __BaseService {
       __map(_r => _r.body as null)
     );
   }
+  apiTasksListResponse(): __Observable<__StrictHttpResponse<Array<Task>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/tasks/`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<Task>>;
+      })
+    );
+  }  apiTasksList(): __Observable<Array<Task>> {
+    return this.apiTasksListResponse().pipe(
+      __map(_r => _r.body as Array<Task>)
+    );
+  }
+  apiTodoItemsListResponse(): __Observable<__StrictHttpResponse<Array<TodoItem>>> {
+    let __params = this.newParams();
+    let __headers = new HttpHeaders();
+    let __body: any = null;
+    let req = new HttpRequest<any>(
+      'GET',
+      this.rootUrl + `/api/todo-items/`,
+      __body,
+      {
+        headers: __headers,
+        params: __params,
+        responseType: 'json'
+      });
+
+    return this.http.request<any>(req).pipe(
+      __filter(_r => _r instanceof HttpResponse),
+      __map((_r) => {
+        return _r as __StrictHttpResponse<Array<TodoItem>>;
+      })
+    );
+  }  apiTodoItemsList(): __Observable<Array<TodoItem>> {
+    return this.apiTodoItemsListResponse().pipe(
+      __map(_r => _r.body as Array<TodoItem>)
+    );
+  }
 }
 
 module ApiService {
@@ -2401,8 +2173,9 @@ module ApiService {
    * Parameters for apiProfilesSearchList
    */
   export interface ApiProfilesSearchListParams {
-    nickname?: string;
-    email?: string;
+    nickname: string;
+    email: string;
+    project?: string;
   }
 
   /**
@@ -2419,6 +2192,23 @@ module ApiService {
   export interface ApiProjectsPartialUpdateParams {
     id: string;
     data: Project;
+  }
+
+  /**
+   * Parameters for apiProjectsMessagesList
+   */
+  export interface ApiProjectsMessagesListParams {
+    projectPk: string;
+
+    /**
+     * The initial index from which to return the results.
+     */
+    offset?: number;
+
+    /**
+     * Number of results to return per page.
+     */
+    limit?: number;
   }
 
   /**
@@ -2612,67 +2402,6 @@ module ApiService {
     taskPk: string;
     projectPk: string;
     data: Comment;
-  }
-
-  /**
-   * Parameters for apiProjectsTasksCommentsReactionsList
-   */
-  export interface ApiProjectsTasksCommentsReactionsListParams {
-    taskPk: string;
-    projectPk: string;
-    commentPk: string;
-  }
-
-  /**
-   * Parameters for apiProjectsTasksCommentsReactionsCreate
-   */
-  export interface ApiProjectsTasksCommentsReactionsCreateParams {
-    taskPk: string;
-    projectPk: string;
-    data: Reaction;
-    commentPk: string;
-  }
-
-  /**
-   * Parameters for apiProjectsTasksCommentsReactionsRead
-   */
-  export interface ApiProjectsTasksCommentsReactionsReadParams {
-    taskPk: string;
-    projectPk: string;
-    id: string;
-    commentPk: string;
-  }
-
-  /**
-   * Parameters for apiProjectsTasksCommentsReactionsUpdate
-   */
-  export interface ApiProjectsTasksCommentsReactionsUpdateParams {
-    taskPk: string;
-    projectPk: string;
-    id: string;
-    data: Reaction;
-    commentPk: string;
-  }
-
-  /**
-   * Parameters for apiProjectsTasksCommentsReactionsPartialUpdate
-   */
-  export interface ApiProjectsTasksCommentsReactionsPartialUpdateParams {
-    taskPk: string;
-    projectPk: string;
-    id: string;
-    data: Reaction;
-    commentPk: string;
-  }
-
-  /**
-   * Parameters for apiProjectsTasksCommentsReactionsDelete
-   */
-  export interface ApiProjectsTasksCommentsReactionsDeleteParams {
-    taskPk: string;
-    projectPk: string;
-    id: string;
-    commentPk: string;
   }
 
   /**

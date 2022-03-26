@@ -1,0 +1,5 @@
+<span 
+  [ngClass]="['color-circle', v === color ? 'color-circle--selected' : '']"
+  *ngFor="let v of colors" 
+  (click)="colorChange.emit(v)"
+[ngStyle]="{ 'background-color': v }"></span>

@@ -1,0 +1,17 @@
+<div class="calendar">
+  <nz-calendar>
+    <ul *nzDateCell="let date" class="events">
+      <ng-container *ngIf="getTodos(date, 'dd/MM/YYYY') as todos">
+        <li *ngFor="let item of todos">
+          <nz-badge nzStatus="processing" (click)="goToTask(item)" [nzText]="item.title"></nz-badge>
+        </li>
+      </ng-container>
+    </ul>
+    <ng-container *nzMonthCell="let month">
+      <div *ngIf="getTodos(month, 'MM/YYYY') as todos" class="notes-month">
+        <section>{{ todos.length }}</section>
+        <span>Todos</span>
+      </div>
+    </ng-container>
+  </nz-calendar>
+</div>

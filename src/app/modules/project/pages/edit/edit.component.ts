@@ -10,11 +10,16 @@ import { ApiService } from 'src/app/api/services';
 })
 export class EditComponent implements OnInit {
 
-  id = ''
-  project?: Project
+  project: Project = {
+    participants: [],
+    title: ''
+  }
 
-  constructor(private route:ActivatedRoute, private api:ApiService) {
-    this.project = this.route.snapshot.data['project']
+  constructor(private route:ActivatedRoute, private api:ApiService) { 
+    const project = this.route.snapshot.data['project'];
+    if(project){
+      this.project = project
+    }
   }
 
   ngOnInit(): void {

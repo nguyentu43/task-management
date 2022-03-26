@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { Task } from 'src/app/api/models';
-
+import { TASK_STATUS } from '../../task-status.contants';
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
@@ -8,9 +8,9 @@ import { Task } from 'src/app/api/models';
 })
 export class TaskComponent implements OnInit {
 
-  @Input() task?: Task
+  @Input() task!: Task
 
-  constructor() { }
+  constructor(@Inject(TASK_STATUS) public colors: any) { }
 
   ngOnInit(): void {
   }

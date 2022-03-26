@@ -5,36 +5,40 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { AvatarGroupComponent } from './components/avatar-group/avatar-group.component';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
-import { ProjectCardComponent } from './components/project-card/project-card.component';
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzDescriptionsModule } from 'ng-zorro-antd/descriptions';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { RouterModule } from '@angular/router';
 import { ProfileSelectComponent } from './components/profile-select/profile-select.component';
 import { NzSelectModule } from 'ng-zorro-antd/select'
 import { FormsModule } from '@angular/forms';
+import { ProjectCardComponent } from './components/project-card/project-card.component';
+import {NzGridModule} from 'ng-zorro-antd/grid';
+import {NzDividerModule} from 'ng-zorro-antd/divider';
+import { NzTagModule } from 'ng-zorro-antd/tag';
 
 
 @NgModule({
   declarations: [
     EmptyComponent,
     AvatarGroupComponent,
-    ProjectCardComponent,
-    ProfileSelectComponent
+    ProfileSelectComponent,
+    ProjectCardComponent
   ],
   imports: [
     CommonModule,
     NzEmptyModule,
     NzButtonModule,
     NzAvatarModule,
-    NzCardModule,
-    NzDescriptionsModule,
     NzTypographyModule,
     RouterModule,
     NzSelectModule,
+    NzGridModule,
+    NzDividerModule,
     NzAvatarModule,
-    FormsModule
+    FormsModule,
+    NzIconModule,
+    NzTagModule
   ],
-  exports: [EmptyComponent, AvatarGroupComponent, ProjectCardComponent, ProfileSelectComponent]
+  exports: [EmptyComponent, AvatarGroupComponent, ProfileSelectComponent, ProjectCardComponent]
 })
 export class SharedModule { }

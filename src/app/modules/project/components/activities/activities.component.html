@@ -1,0 +1,11 @@
+<ng-container *ngIf="!loading; else loadingTpl">
+    <nz-timeline [nzMode]="'left'">
+        <nz-timeline-item *ngFor="let activity of activities" nzLabel="{{activity.created_at | date: 'short'}}">
+            {{ activity.content }}
+        </nz-timeline-item>
+    </nz-timeline>
+</ng-container>
+<ng-template #loadingTpl>
+    <nz-spin nzSimple></nz-spin>
+</ng-template>
+

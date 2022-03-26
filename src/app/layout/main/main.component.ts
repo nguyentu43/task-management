@@ -17,11 +17,12 @@ import { Router } from '@angular/router';
 })
 export class MainComponent implements OnInit {
 
-  isCollapsed = false
-  siderMenu = [{
-      title: 'Projects',
-      icon: 'project',
-      children: [{
+  menu = [{
+      title: 'Dashboard',
+      icon: 'home',
+      link: '/home'
+    },
+      {
         title: 'Create a project',
         icon: 'plus-circle',
         link: '/projects/create'
@@ -29,13 +30,10 @@ export class MainComponent implements OnInit {
         title: 'Your projects',
         icon: 'unordered-list',
         link: '/projects'
-      }]
+      
     },
     {
-      title: 'Calendar', icon:'calendar', link: 'calendar'
-    },
-    {
-      title: 'Report', icon: 'bar-chart', link: 'report'
+      title: 'Calendar', icon:'calendar', link: '/calendar'
     }
   ]
 

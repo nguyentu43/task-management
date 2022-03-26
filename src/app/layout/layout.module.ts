@@ -11,12 +11,15 @@ import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
 import { MainComponent } from './main/main.component';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { RouterModule } from '@angular/router';
-
+import { WsModule } from '../modules/ws/ws.module';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { NzResultModule } from 'ng-zorro-antd/result';
 
 
 @NgModule({
   declarations: [
-    MainComponent
+    MainComponent,
+    NotFoundComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +32,9 @@ import { RouterModule } from '@angular/router';
     NzButtonModule,
     NzToolTipModule,
     NzAvatarModule,
-    RouterModule
+    RouterModule,
+    WsModule,
+    NzResultModule
   ]
 })
 export class LayoutModule { }

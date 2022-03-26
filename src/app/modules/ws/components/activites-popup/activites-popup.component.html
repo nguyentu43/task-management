@@ -1,0 +1,23 @@
+<nz-badge [nzCount]="activityCount">
+    <button
+        nz-button
+        nz-popover
+        nzPopoverTitle="Activities"
+        [nzPopoverContent]="contentTpl"
+        nzPopoverTrigger="click"
+        nzPopoverPlacement="bottom"
+        (nzPopoverVisibleChange)="activityCount = 0"
+        [(nzPopoverVisible)]="isVisible"
+    >Activities</button>
+</nz-badge>
+<ng-template #contentTpl>
+    <div class="list">
+        <div class="item" *ngFor="let item of activites">
+          <nz-badge nzStatus="success" [nzText]="item.title"></nz-badge>
+          <div>{{ item.content }}</div>
+          <div><nz-tag><i nz-icon nzType="calendar" nzTheme="twotone"></i><span>{{ item.created_at | date:'short' }}</span></nz-tag></div>
+          <a [routerLink]="['/projects', item.task?.project?.id, 'tasks', item.task?.id]">Go to task</a>
+        </div>
+        <nz-list-empty *ngIf="activites.length === 0"></nz-list-empty>
+    </div>
+</ng-template>

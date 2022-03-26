@@ -1,4 +1,6 @@
-#shortTime{
+@import 'src/styles/contants.scss';
+
+#time{
     font-size: 50px;
 }
 
@@ -17,6 +19,5 @@
 }
 
 .dashboard{
-    padding: 16px;
-    background-color: white;
+    min-height: $fixed-height;
 }

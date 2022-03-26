@@ -1,42 +1,39 @@
 <div class="project-detail">
-    <div class="project-detail__header">
-        <div>{{ project.title }}</div>
-        <div>
-            <a [routerLink]="['/projects', project.id, 'edit']" nz-button nzShape="circle">
-                <i nz-icon nzType="edit" nzTheme="outline"></i>
-            </a>
-        </div>
+  <div class="panel panel-white header">
+    <h3 nz-typography>{{ project.title }}</h3>
+    <div class="action">
+      <a [routerLink]="['/projects', project.id, 'edit']" nz-button nzShape="circle">
+        <i nz-icon nzType="edit" nzTheme="outline"></i>
+      </a>
+      <app-tags-management></app-tags-management>
+      <button nz-button nzShape="circle" nz-tooltip nzTooltipTitle="Add a section" (click)="addSection()">
+        <i nz-icon nzType="plus" nzTheme="outline"></i>
+      </button>
     </div>
+  </div>
+
+  <div class="panel panel-white sections">
     <ng-container *ngIf="!isLoading; else loadingTpl">
-        <div nz-row class="project-detail__content">
-            <div 
-            nz-col 
-            nzSpan="8" 
-            *ngFor="let section of sections" 
-            >
-                <app-section [section]="section" [projectPk]="project.id + ''"></app-section>
-            </div>
-        </div>
+      <div nz-row>
+        <app-section *ngFor="let section of sections" [section]="section" (remove)="removeSection($event)"
+          [projectPk]="project.id + ''"></app-section>
+      </div>
     </ng-container>
     <ng-template #loadingTpl>
-        <div nz-row class="project-detail__content" [nzGutter]="8">
-            <div 
-            nz-col 
-            nzSpan="8"
-            >
-            <nz-skeleton></nz-skeleton>
+      <div nz-row class="skeleton" [nzGutter]="8">
+        <div nz-col nzSm="12" nzMd="8">
+          <nz-skeleton></nz-skeleton>
+          <nz-skeleton></nz-skeleton>
         </div>
-        <div 
-            nz-col 
-            nzSpan="8"
-            >
-            <nz-skeleton></nz-skeleton>
-        </div><div 
-        nz-col 
-        nzSpan="8"
-        >
-        <nz-skeleton></nz-skeleton>
-    </div>
+        <div nz-col nzSm="12" nzMd="8">
+          <nz-skeleton></nz-skeleton>
+          <nz-skeleton></nz-skeleton>
         </div>
+        <div nz-col nzSm="12" nzMd="8">
+          <nz-skeleton></nz-skeleton>
+          <nz-skeleton></nz-skeleton>
+        </div>
+      </div>
     </ng-template>
+  </div>
 </div>

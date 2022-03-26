@@ -1,0 +1,59 @@
+.ant-divider-horizontal{
+    margin: 5px 0 !important;
+    .ant-divider-inner-text{
+        font-weight: bold;
+    }
+}
+
+app-profile-select .ant-select-multiple .ant-select-selection-item{
+    height: 40px !important;
+    align-items: center !important;
+    nz-avatar{
+        margin-right: 5px;
+    }
+}
+
+$colors-theme: (
+    "primary": dodgerblue,
+    "success": springgreen,
+    "danger": darkred,
+    "info": aquamarine,
+    "secondary": beige,
+    "dark": navy,
+    "white": white,
+);
+
+.panel{
+    padding: 15px;
+    & + &{
+        margin: 15px 0;
+    }
+}
+
+.panel-white{
+    color: black !important;
+}
+
+@each $name, $color in $colors-theme {
+    .panel-#{$name}{
+        color: white;
+        background-color: $color;
+    }
+
+    .border-#{$name}{
+        border-color: $color;
+    }
+}
+
+.border{
+    border-width: 2px;
+    border-style: solid;
+}
+
+.border-thick{
+    border-width: 5px;
+}
+
+div.ant-typography{
+    margin-bottom: 0;
+}

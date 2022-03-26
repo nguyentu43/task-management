@@ -1,4 +1,5 @@
-.edit-project{
-    background-color: white;
-    padding: 10px;
+@import 'src/styles/contants.scss';
+
+.panel{
+    min-height: $fixed-height;
 }

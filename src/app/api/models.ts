@@ -1,10 +1,10 @@
 export { Profile } from './models/profile';
 export { Project } from './models/project';
-export { Message } from './models/message';
-export { Section } from './models/section';
 export { Tag } from './models/tag';
+export { Section } from './models/section';
 export { Task } from './models/task';
-export { Reaction } from './models/reaction';
+export { Activity } from './models/activity';
+export { Message } from './models/message';
 export { Comment } from './models/comment';
 export { TodoItem } from './models/todo-item';
 export { File } from './models/file';

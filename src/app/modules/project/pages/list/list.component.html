@@ -9,8 +9,10 @@
             </div>
             
             <div nz-row nzGutter="8">
-                <div nz-col nzSpan="8" *ngFor="let project of projects" class="project">
-                    <app-project-card [project]="project" ></app-project-card>
+                <div nz-col nzXs="24" nzMd="12" *ngFor="let project of projects">
+                    <div class="project">
+                        <app-project-card [project]="project" ></app-project-card>
+                    </div>
                 </div>
             </div>
         </ng-container>
@@ -20,31 +22,16 @@
     </ng-container>
     <ng-template #loading>
         <div nz-row nzGutter="8">
-            <div nz-col nzSpan="8">
+            <div nz-col nzXs="24" nzMd="12">
                 <nz-skeleton></nz-skeleton>
             </div>
-            <div nz-col nzSpan="8">
+            <div nz-col nzXs="24" nzMd="12">
                 <nz-skeleton></nz-skeleton>
             </div>
-            <div nz-col nzSpan="8">
+            <div nz-col nzXs="24" nzMd="12">
                 <nz-skeleton></nz-skeleton>
             </div>
-            <div nz-col nzSpan="8">
-                <nz-skeleton></nz-skeleton>
-            </div>
-            <div nz-col nzSpan="8">
-                <nz-skeleton></nz-skeleton>
-            </div>
-            <div nz-col nzSpan="8">
-                <nz-skeleton></nz-skeleton>
-            </div>
-            <div nz-col nzSpan="8">
-                <nz-skeleton></nz-skeleton>
-            </div>
-            <div nz-col nzSpan="8">
-                <nz-skeleton></nz-skeleton>
-            </div>
-            <div nz-col nzSpan="8">
+            <div nz-col nzXs="24" nzMd="12">
                 <nz-skeleton></nz-skeleton>
             </div>
         </div>

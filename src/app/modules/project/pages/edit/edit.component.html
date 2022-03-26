@@ -1,9 +1,9 @@
-<div class="edit-project">
-<ng-container *ngIf="!project else editProject">
+<div class="panel panel-white">
+  <ng-container *ngIf="!project.id else editProject">
     <h2 nz-typography>Create a project</h2>
-</ng-container>
-<ng-template #editProject>
+  </ng-container>
+  <ng-template #editProject>
     <h2 nz-typography>Edit project</h2>
-</ng-template>
-<app-project-form [project]="project"></app-project-form>
+  </ng-template>
+  <app-project-form [project]="project"></app-project-form>
 </div>

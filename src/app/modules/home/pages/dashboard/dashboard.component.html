@@ -1,9 +1,11 @@
-<div nz-row nzGutter="4" class="dashboard">
-    <div nz-col nzFlex="2">
-        <h3 nz-typography >{{ nowDateTime | date:'fullDate' }}</h3>
-        <div id="shortTime">{{ nowDateTime | date: 'shortTime' }}</div>
+<div nz-row [nzGutter]="[15,15]" class="dashboard">
+    <div nz-col nzXs="24" nzMd="8">
+        <div class="panel-primary panel">
+            <h3 nz-typography >{{ nowDateTime | date:'fullDate' }}</h3>
+            <div id="time">{{ nowDateTime | date: 'shortTime' }}</div>
+        </div>
     </div>
-    <div nz-col nzFlex="3" class="project-list">
+    <div nz-col nzXs="24" nzMd="16">
         <h3 nz-typography>My projects</h3>
         <ng-container *ngIf="api.apiProjectsList() | async as projects; else loading">
             <ng-container *ngIf="projects.length > 0; else empty">
@@ -18,9 +20,10 @@
             </ng-template>
         </ng-container>
         <ng-template #loading>
-            <div nz-row>
+            <div class="panel panel-white">
                 <nz-skeleton [nzActive]="true"></nz-skeleton>
-                <nz-skeleton [nzActive]="true"></nz-skeleton>
+            </div>
+            <div class="panel panel-white">
                 <nz-skeleton [nzActive]="true"></nz-skeleton>
             </div>
         </ng-template>

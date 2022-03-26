@@ -15,14 +15,19 @@ import { CoreModule } from './core/core.module';
 import { ApiModule } from './api/api.module';
 import { ApiInterceptor } from './core/interceptors/api.interceptor';
 import { HttpErrorInterceptor } from './core/interceptors/http-error.interceptor';
-import { NgHttpCachingModule } from 'ng-http-caching';
+import { NgHttpCachingConfig, NgHttpCachingModule } from 'ng-http-caching';
 import { StoreModule } from '@ngrx/store';
 import { appReducer } from './store/app.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { ProfileEffects } from './store/profile/profile.effects';
 
+
 registerLocaleData(en);
+
+const ngHttpCachingConfig: NgHttpCachingConfig = {
+  lifetime: 1000 * 20 // cache expire after 10 seconds
+};
 
 @NgModule({
   declarations: [
@@ -34,7 +39,7 @@ registerLocaleData(en);
     CoreModule,
     FormsModule,
     HttpClientModule,
-    NgHttpCachingModule,
+    NgHttpCachingModule.forRoot(ngHttpCachingConfig),
     BrowserAnimationsModule,
     ApiModule,
     StoreModule.forRoot(appReducer),

@@ -14,7 +14,7 @@ import { File } from '../models/file';
 class StorageService extends __BaseService {
   static readonly storageCreatePath = '/storage/';
   static readonly storageReadPath = '/storage/{project_pk}/{task_pk}/';
-  static readonly storageRead_1Path = '/storage/{project_pk}/{task_pk}/{filename}';
+  static readonly storageFileReadPath = '/storage/{project_pk}/{task_pk}/{filename}';
   static readonly storageFileDeletePath = '/storage/{project_pk}/{task_pk}/{filename}/delete';
 
   constructor(
@@ -25,12 +25,25 @@ class StorageService extends __BaseService {
   }
 
   /**
+   * @param params The `StorageService.StorageCreateParams` containing the following parameters:
+   *
+   * - `task_pk`:
+   *
+   * - `project_pk`:
+   *
+   * - `file`:
+   *
    * @return storage response
    */
-  storageCreateResponse(): __Observable<__StrictHttpResponse<File>> {
+  storageCreateResponse(params: StorageService.StorageCreateParams): __Observable<__StrictHttpResponse<File>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
+    let __formData = new FormData();
+    __body = __formData;
+    if (params.taskPk != null) { __formData.append('task_pk', params.taskPk as string | Blob);}
+    if (params.projectPk != null) { __formData.append('project_pk', params.projectPk as string | Blob);}
+    if (params.file != null) { __formData.append('file', params.file as string | Blob);}
     let req = new HttpRequest<any>(
       'POST',
       this.rootUrl + `/storage/`,
@@ -49,10 +62,18 @@ class StorageService extends __BaseService {
     );
   }
   /**
+   * @param params The `StorageService.StorageCreateParams` containing the following parameters:
+   *
+   * - `task_pk`:
+   *
+   * - `project_pk`:
+   *
+   * - `file`:
+   *
    * @return storage response
    */
-  storageCreate(): __Observable<File> {
-    return this.storageCreateResponse().pipe(
+  storageCreate(params: StorageService.StorageCreateParams): __Observable<File> {
+    return this.storageCreateResponse(params).pipe(
       __map(_r => _r.body as File)
     );
   }
@@ -105,7 +126,7 @@ class StorageService extends __BaseService {
   }
 
   /**
-   * @param params The `StorageService.StorageRead_1Params` containing the following parameters:
+   * @param params The `StorageService.StorageFileReadParams` containing the following parameters:
    *
    * - `task_pk`:
    *
@@ -113,7 +134,7 @@ class StorageService extends __BaseService {
    *
    * - `filename`:
    */
-  storageRead_1Response(params: StorageService.StorageRead_1Params): __Observable<__StrictHttpResponse<null>> {
+  storageFileReadResponse(params: StorageService.StorageFileReadParams): __Observable<__StrictHttpResponse<null>> {
     let __params = this.newParams();
     let __headers = new HttpHeaders();
     let __body: any = null;
@@ -138,7 +159,7 @@ class StorageService extends __BaseService {
     );
   }
   /**
-   * @param params The `StorageService.StorageRead_1Params` containing the following parameters:
+   * @param params The `StorageService.StorageFileReadParams` containing the following parameters:
    *
    * - `task_pk`:
    *
@@ -146,8 +167,8 @@ class StorageService extends __BaseService {
    *
    * - `filename`:
    */
-  storageRead_1(params: StorageService.StorageRead_1Params): __Observable<null> {
-    return this.storageRead_1Response(params).pipe(
+  storageFileRead(params: StorageService.StorageFileReadParams): __Observable<null> {
+    return this.storageFileReadResponse(params).pipe(
       __map(_r => _r.body as null)
     );
   }
@@ -204,6 +225,15 @@ class StorageService extends __BaseService {
 module StorageService {
 
   /**
+   * Parameters for storageCreate
+   */
+  export interface StorageCreateParams {
+    taskPk: string;
+    projectPk: string;
+    file: Blob;
+  }
+
+  /**
    * Parameters for storageRead
    */
   export interface StorageReadParams {
@@ -212,9 +242,9 @@ module StorageService {
   }
 
   /**
-   * Parameters for storageRead_1
+   * Parameters for storageFileRead
    */
-  export interface StorageRead_1Params {
+  export interface StorageFileReadParams {
     taskPk: string;
     projectPk: string;
     filename: string;

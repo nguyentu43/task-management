@@ -3,7 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { DetailComponent } from './pages/detail/detail.component';
 import { EditComponent } from './pages/edit/edit.component';
 import { ListComponent } from './pages/list/list.component';
-import { ProjectResolver } from './project.resolver';
+import { ProjectResolver } from '../../core/resolvers/project.resolver';
+import { TaskPageComponent } from './pages/task/task.component';
+import { TaskResolver } from 'src/app/core/resolvers/task.resolver';
 
 const routes:Routes = [
     {
@@ -26,6 +28,13 @@ const routes:Routes = [
         component: EditComponent,
         resolve: {
             project: ProjectResolver
+        }
+    },
+    {
+        path: ':id/tasks/:task_id',
+        component: TaskPageComponent,
+        resolve: {
+            task: TaskResolver
         }
     }
 ];

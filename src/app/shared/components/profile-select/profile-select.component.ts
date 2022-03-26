@@ -1,8 +1,9 @@
-import { Component, forwardRef, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, forwardRef, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BehaviorSubject, debounceTime, skipWhile, switchMap } from 'rxjs';
 import { Profile } from 'src/app/api/models';
 import { ApiService } from 'src/app/api/services';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-profile-select',
@@ -16,13 +17,13 @@ import { ApiService } from 'src/app/api/services';
     }
   ]
 })
-export class ProfileSelectComponent implements ControlValueAccessor, OnChanges{
+export class ProfileSelectComponent implements ControlValueAccessor{
   isLoading = false
-  profiles: Profile[] = []
+  @Input() profiles: Profile[] = []
+  @Output() profilesChange = new EventEmitter()
   searchChange$ = new BehaviorSubject('')
-  selectedProfiles?: string[]
-  onChange = (value: string[]) => {};
-  @Input() initialProfiles?: Profile[]
+  onChange = (value: Profile[]) => {}
+  @Input() project_id: string = ''
 
   constructor(private api:ApiService) {
     this.searchChange$.pipe(
@@ -30,6 +31,9 @@ export class ProfileSelectComponent implements ControlValueAccessor, OnChanges{
       debounceTime(500),
       switchMap(v => {
         this.isLoading = true;
+        if(this.project_id){
+          return this.api.apiProfilesSearchList({nickname:v, email:v, project:this.project_id});
+        }
         return this.api.apiProfilesSearchList({nickname:v, email:v});
       })
     )
@@ -38,13 +42,10 @@ export class ProfileSelectComponent implements ControlValueAccessor, OnChanges{
       this.isLoading = false;
     })
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    this.profiles = this.initialProfiles ?? [];
-    this.selectedProfiles = this.initialProfiles?.map(p => p.id);
-  }
 
-  onModelChange(data:string[]){
-    this.onChange(data);
+  onModelChange(profiles: Profile[]){
+    this.onChange(profiles);
+    this.profilesChange.emit(profiles);
   }
 
   writeValue(obj: any): void {
@@ -60,4 +61,6 @@ export class ProfileSelectComponent implements ControlValueAccessor, OnChanges{
   onSearch(value:string){
     this.searchChange$.next(value);
   }
+
+  compareProfile = (p1:Profile, p2:Profile) => p1?.id === p2?.id
 }

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { LayoutModule } from './layout/layout.module';
 import {MainComponent} from './layout/main/main.component';
+import { NotFoundComponent } from './layout/not-found/not-found.component';
 
 const routes:Routes = [
   {
@@ -22,6 +23,15 @@ const routes:Routes = [
         path: 'projects',
         canActivate: [AuthGuard],
         loadChildren: () => import('./modules/project/project.module').then(m => m.ProjectModule)
+      },
+      {
+        path: 'calendar',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./modules/calendar/calendar.module').then(m=>m.CalendarModule)
+      },
+      {
+        path: '404',
+        component: NotFoundComponent
       }
     ]
   }

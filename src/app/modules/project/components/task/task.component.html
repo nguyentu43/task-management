@@ -1,19 +1,24 @@
-<div class="task">
-    <div class="task__header">
-        {{ task?.title }}
+<div class="panel panel-white">
+    <div class="header">
+        <nz-tag [nzColor]="colors[task.status ?? 'UnComplete']">{{task.status}}</nz-tag>
+        <br/>
+        <a [routerLink]="['/projects', task.project?.id, 'tasks', task.id]">{{ task.title }}</a>
     </div>
-    <div class="task__description">
-        <p>{{ task?.description }}</p>
-        <p>
+    <div class="description">
+        <div>{{ task.description }}</div>
+        <div>
             <nz-avatar
             nzShape="square"
-            [nzSrc]="task?.owner?.picture"
+            [nzSrc]="task.owner?.picture"
             ></nz-avatar>
-        </p>
-        <p nz-typography nzType="warning">
+            {{ task.owner?.nickname }}
+        </div>
+        <div>
+            <nz-tag *ngFor="let tag of task.tags" [nzColor]="tag.color">{{ tag.name }}</nz-tag>
+        </div>
+        <nz-tag nzColor="warning">
             <i nz-icon nzType="calendar" nzTheme="outline"></i>
             {{ task?.due_datetime | date: 'short' }}
-        </p>
-        <app-task-modal [task]="task"></app-task-modal>
+        </nz-tag>
     </div>
 </div>

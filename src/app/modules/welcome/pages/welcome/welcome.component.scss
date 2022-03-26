@@ -1,0 +1,10 @@
+@import 'src/styles/contants.scss';
+
+.welcome-page{
+    background-color: white;
+    height: $fixed-height;
+
+        *{
+            text-align: center;
+        }
+}
