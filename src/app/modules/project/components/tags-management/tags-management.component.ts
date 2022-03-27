@@ -26,6 +26,7 @@ export class TagsManagementComponent {
     private message: NzMessageService,
     private api:ApiService, 
     private route:ActivatedRoute) {
+      
     store.select(state=>state.tags).subscribe(data => {
       this.tags = data.map(item => Object.assign({}, item));
     });
@@ -70,12 +71,14 @@ export class TagsManagementComponent {
   }
 
   addTag(){
+    const data:any = {
+      name: 'New tag',
+      color: '#FF6B6B',
+      project: this.project.id
+    };
     this.api.apiProjectsTagsCreate({
-      projectPk: this.project.id + '',
-      data: {
-        name: 'New tag',
-        color: '#FF6B6B'
-      }
+      projectPk: data['project'] + '',
+      data
     })
     .subscribe(tag => {
       this.tags = this.tags.concat(tag);

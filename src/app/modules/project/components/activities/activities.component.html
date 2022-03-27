@@ -1,7 +1,7 @@
 <ng-container *ngIf="!loading; else loadingTpl">
-    <nz-timeline [nzMode]="'left'">
-        <nz-timeline-item *ngFor="let activity of activities" nzLabel="{{activity.created_at | date: 'short'}}">
-            {{ activity.content }}
+    <nz-timeline>
+        <nz-timeline-item *ngFor="let activity of activities">
+            {{activity.created_at | date: 'short'}} | {{ activity.content }}
         </nz-timeline-item>
     </nz-timeline>
 </ng-container>

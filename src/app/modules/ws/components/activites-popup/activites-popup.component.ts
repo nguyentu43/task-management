@@ -5,7 +5,7 @@ import { Activity } from 'src/app/api/models';
 import { ApiService } from 'src/app/api/services';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { WebSocketService } from 'src/app/core/services/web-socket.service';
-import { taskStatus } from 'src/app/modules/project/task-status.contants';
+import { taskStatus } from 'src/app/shared/task-status.contants';
 
 @Component({
   selector: 'app-activites-popup',
@@ -39,7 +39,6 @@ export class ActivitesPopupComponent implements OnInit, OnDestroy {
       this.activites = this.activites.concat({
         ...activity, task: { id: activity.task }
       });
-      this.message.info("Activity: " + activity.content);
       this.activityCount++;
     });
   }

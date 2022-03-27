@@ -20,7 +20,6 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { SectionComponent } from './components/section/section.component';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
-import { TaskComponent } from './components/task/task.component'
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
@@ -31,7 +30,6 @@ import { UploadFileComponent } from './components/upload-file/upload-file.compon
 import { ActivitiesComponent } from './components/activities/activities.component';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
 import {NzSpinModule} from 'ng-zorro-antd/spin';
-import { taskStatus, TASK_STATUS } from './task-status.contants';
 import { TodoInputComponent } from './components/todo/todo-input/todo-input.component';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
@@ -46,6 +44,9 @@ import { TaskPageComponent } from './pages/task/task.component';
 import { TodoListComponent } from './components/todo/todo-list/todo-list.component';
 import {NzCommentModule} from 'ng-zorro-antd/comment';
 import {NzListModule} from 'ng-zorro-antd/list';
+import { DndModule } from 'ngx-drag-drop';
+import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
+import {NzBadgeModule} from 'ng-zorro-antd/badge';
 
 
 @NgModule({
@@ -55,7 +56,6 @@ import {NzListModule} from 'ng-zorro-antd/list';
     DetailComponent,
     ProjectFormComponent,
     SectionComponent,
-    TaskComponent,
     UploadFileComponent,
     ActivitiesComponent,
     TodoInputComponent,
@@ -80,6 +80,7 @@ import {NzListModule} from 'ng-zorro-antd/list';
     NzFormModule,
     NzInputModule,
     ReactiveFormsModule,
+    NzBreadCrumbModule,
     NzDatePickerModule,
     NzProgressModule,
     NzSelectModule,
@@ -90,6 +91,7 @@ import {NzListModule} from 'ng-zorro-antd/list';
     NzCardModule,
     NzDividerModule,
     NzSpaceModule,
+    NzBadgeModule,
     NzSpinModule,
     NzIconModule,
     NzPopoverModule,
@@ -98,10 +100,8 @@ import {NzListModule} from 'ng-zorro-antd/list';
     NzModalModule,
     NzToolTipModule,
     NzTagModule,
-    NzListModule
-  ],
-  providers: [
-    {provide: TASK_STATUS, useValue: taskStatus}
+    NzListModule,
+    DndModule
   ]
 })
 export class ProjectModule { }

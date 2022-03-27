@@ -39,6 +39,8 @@ export class MainComponent implements OnInit {
 
   profileState$: Observable<ProfileState> = this.store.select(state=> state.profile)
 
+  now = new Date()
+
   constructor(public auth: AuthService, private store: Store<AppState>, private router: Router) {
   }
 

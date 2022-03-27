@@ -1,31 +1,51 @@
-<div nz-row [nzGutter]="[15,15]" class="dashboard">
+<div *ngIf="!loading; else loadingTpl" nz-row [nzGutter]="[10,10]" class="dashboard">
+  <div nz-col nzXs="24" nzMd="8">
+    <div class="panel-primary panel">
+      <h3 nz-typography style="color:white">{{ nowDateTime | date:'fullDate' }}</h3>
+      <div class="big-text">{{ nowDateTime | date: 'hh:mm:ss' }}</div>
+    </div>
+    <div class="panel-success panel">
+      <h3 nz-typography style="color:white">Projects</h3>
+      <div class="big-text">{{ projects.length }}</div>
+    </div>
+    <div class="panel-dark panel">
+      <h3 nz-typography style="color:white">Tasks</h3>
+      <div class="big-text">{{ tasks.length }}</div>
+    </div>
+  </div>
+  <div nz-col nzXs="24" nzMd="16">
+    <div class="panel panel-danger">
+      <h3 nz-typography style="color:white;">Tasks</h3>
+      <div [hidden]="tasks.length > 0" class="panel panel-white">
+          <app-empty-data description="Create a new project to add some task" [link]="['/projects/create']"
+            ></app-empty-data>
+      </div>
+      <div class="tasks">
+        <app-task *ngFor="let task of tasks" [task]="task"></app-task>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loadingTpl>
+  <div nz-row [nzGutter]="[10,10]">
     <div nz-col nzXs="24" nzMd="8">
-        <div class="panel-primary panel">
-            <h3 nz-typography >{{ nowDateTime | date:'fullDate' }}</h3>
-            <div id="time">{{ nowDateTime | date: 'shortTime' }}</div>
-        </div>
+      <div class="panel panel-white">
+        <nz-skeleton></nz-skeleton>
+      </div>
+      <div class="panel panel-white">
+        <nz-skeleton></nz-skeleton>
+      </div>
+      <div class="panel panel-white">
+        <nz-skeleton></nz-skeleton>
+      </div>
     </div>
     <div nz-col nzXs="24" nzMd="16">
-        <h3 nz-typography>My projects</h3>
-        <ng-container *ngIf="api.apiProjectsList() | async as projects; else loading">
-            <ng-container *ngIf="projects.length > 0; else empty">
-                <div *ngFor="let project of projects" class="card-wrapper">
-                    <app-project-card [project]="project"></app-project-card>
-                </div>
-            </ng-container>
-            <ng-template #empty>
-                <app-empty-data 
-                description="Project Empty" 
-                [routerLink]="['/projects/create']"></app-empty-data>
-            </ng-template>
-        </ng-container>
-        <ng-template #loading>
-            <div class="panel panel-white">
-                <nz-skeleton [nzActive]="true"></nz-skeleton>
-            </div>
-            <div class="panel panel-white">
-                <nz-skeleton [nzActive]="true"></nz-skeleton>
-            </div>
-        </ng-template>
+      <div class="panel panel-white">
+        <nz-skeleton></nz-skeleton>
+        <nz-skeleton></nz-skeleton>
+        <nz-skeleton></nz-skeleton>
+      </div>
     </div>
-</div>
+  </div>
+</ng-template>

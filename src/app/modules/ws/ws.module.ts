@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { FormsModule } from '@angular/forms';
 import {NzSpinModule} from 'ng-zorro-antd/spin';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {NzSpinModule} from 'ng-zorro-antd/spin';
     NzPopoverModule,
     NzListModule,
     NzInputModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ],
   exports: [ChatPopupComponent, ActivitesPopupComponent]
 })

@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { Project, Tag } from 'src/app/api/models';
 import { ApiService } from 'src/app/api/services';
 import { AppState } from 'src/app/store/app.reducer';
 import { SectionWithTasks } from '../../section.interface';
 import * as TagsAction from 'src/app/store/tags/tags.actions';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { ProfileState } from 'src/app/store/profile/profile.reducer';
 
 @Component({
   selector: 'app-detail',
@@ -20,11 +21,13 @@ export class DetailComponent implements OnInit {
   sections: SectionWithTasks[] = []
   tags: Tag[] = []
   isLoading = true;
+  profileState$:Observable<ProfileState>
 
   constructor(private api:ApiService,
     private message: NzMessageService,
     private route:ActivatedRoute, 
     private store:Store<AppState>) {
+      this.profileState$ = store.select(state=>state.profile);
     this.project = this.route.snapshot.data['project'];
     const id = this.project.id + '';
     forkJoin([
@@ -40,7 +43,7 @@ export class DetailComponent implements OnInit {
           ...section,
           tasks: filterTasks
         }
-      }).sort((s1, s2) => s1.order - s2.order);
+      })
       this.tags = tags;
       this.store.dispatch(TagsAction.loadProfileSuccess({ data: tags }));
       this.isLoading = false;
@@ -62,13 +65,15 @@ export class DetailComponent implements OnInit {
   }
 
   addSection(){
+    const data : any = {
+      name: 'New section',
+      color: '#FF6B6B',
+      project: this.project.id
+    };
+    
     this.api.apiProjectsSectionsCreate({
-      projectPk:this.project.id + '',
-      data: {
-        name: 'New section',
-        color: '#FF6B6B',
-        order: this.sections[this.sections.length - 1].order + 1
-      }
+      projectPk: data['project'] + '',
+      data
     })
     .subscribe(section => {
       this.message.success('New section was created');

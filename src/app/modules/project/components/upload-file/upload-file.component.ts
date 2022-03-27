@@ -24,7 +24,7 @@ export class UploadFileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.getFiles();
+    this.getFiles();
   }
 
   beforeUpload = (file:NzUploadFile) => {

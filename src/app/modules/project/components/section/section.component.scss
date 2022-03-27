@@ -1,9 +1,10 @@
 .section{
-
+    
     .header{
         padding: 10px;
         display: flex;
         justify-content: space-between;
+        align-items: center;
 
         [nzEditable]{
             color: white;
@@ -14,12 +15,17 @@
     }
 
     .content{
+        min-height: 200px;
         padding: 0 10px 10px 10px;
         .task{
             margin-bottom: 10px;
         }
         .task:last-child{
             margin-bottom: 0;
+        }
+
+        .dndDraggingSource{
+            display: none;
         }
     }
 }

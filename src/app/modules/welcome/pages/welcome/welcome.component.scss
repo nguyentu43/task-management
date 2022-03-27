@@ -1,10 +1,11 @@
-@import 'src/styles/contants.scss';
+@import 'src/styles/constants.scss';
 
-.welcome-page{
-    background-color: white;
-    height: $fixed-height;
-
-        *{
-            text-align: center;
-        }
+.welcome-page {
+  height: $fixed-height;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  * {
+    text-align: center;
+  }
 }

@@ -1,24 +1,31 @@
 <div class="section" [ngStyle]="{ 'background-color': section?.color}">
   <div class="header" [ngStyle]="{'background-color': section?.color}">
-    <div
-    nz-typography
-    [nzContent]="section?.name"
-    nzEditable
-    (nzContentChange)="changeSection(setSection({ name: $event }))"></div>
-    <nz-space>
+    <div nz-typography [nzContent]="section?.name" nzEditable
+      (nzContentChange)="changeSection(setSection({ name: $event }))"></div>
+    <div>
+      <nz-badge nzDot [nzShowDot]="searchText !== ''">
+        <button nz-popover nzPopoverTrigger="click" [nzPopoverContent]="searchTpl" style="margin-right: 5px"
+          nzShape="circle" nzPopoverPlacement="bottom" nz-tooltip nzTooltipTitle="Filter task" nz-button>
+          <i nz-icon nzType="search" nzTheme="outline"></i>
+        </button>
+      </nz-badge>
       <button nz-button nzShape="circle" nz-popover [nzPopoverTrigger]="'click'" [(nzPopoverVisible)]="popupVisible"
-        nzPopoverTitle="Change section" [nzPopoverContent]="popupTpl" nzPopoverPlacement="bottom"
-        style="margin-right: 5px">
+        nzPopoverTitle="Change section" nz-tooltip nzTooltipTitle="Change section" [nzPopoverContent]="popupTpl"
+        nzPopoverPlacement="bottom" style="margin-right: 5px">
         <i nz-icon nzType="setting" nzTheme="outline"></i>
       </button>
-      <button nzShape="circle" nz-button (click)="addTask()">
+      <button nzShape="circle" nz-tooltip nzTooltipTitle="Add task" nz-button (click)="addTask()">
         <i nz-icon nzType="plus" nzTheme="outline"></i>
       </button>
-    </nz-space>
+    </div>
   </div>
-  <div class="content">
-    <div *ngFor="let task of section?.tasks" class="task">
+  <div class="content" dndDropzone dndEffectAllowed="copyMove" (dndDrop)="onDrop($event)">
+    <div nz-tooltip nzTooltipTitle="Drag to order" *ngFor="let task of section?.tasks" class="task"
+      (dndEnd)="onEndDrag(task)" [dndDraggable]="task" dndEffectAllowed="move">
       <app-task [task]="task"></app-task>
+    </div>
+    <div dndPlaceholderRef class="task panel panel-white">
+      <nz-skeleton></nz-skeleton>
     </div>
     <div class="task panel panel-white" *ngIf="section?.tasks?.length === 0">
       <app-empty-data (clickButton)="addTask()" description="Add new task"></app-empty-data>
@@ -26,15 +33,19 @@
   </div>
 </div>
 <ng-template #popupTpl>
-  <app-color-picker [color]="section!.color" (colorChange)="changeSection(setSection({color: $event}))" ></app-color-picker>
-  <div>
-    <button 
-    nz-popconfirm
-    nz-button 
-    nzPopconfirmTitle="Are you sure delete this section?"
-    nzPopconfirmPlacement="bottom"
-    (nzOnConfirm)="remove.emit(section.id + '')"
-    nzDanger
-    >Remove</button>
+  <app-color-picker [color]="section!.color" (colorChange)="changeSection(setSection({color: $event}))">
+  </app-color-picker>
+  <div style="margin-top: 10px">
+    <button nz-popconfirm nz-button nzPopconfirmTitle="Are you sure delete this section?" nzPopconfirmPlacement="bottom"
+      (nzOnConfirm)="remove.emit(section.id + '')" nzDanger>Remove</button>
   </div>
+</ng-template>
+<ng-template #searchTpl>
+  <nz-input-group [nzSuffix]="suffixIconSearch">
+    <input type="text" nz-input placeholder="title name, tag name" [ngModel]="searchText"
+      (ngModelChange)="onSearch($event)" />
+  </nz-input-group>
+  <ng-template #suffixIconSearch>
+    <i nz-icon nzType="search"></i>
+  </ng-template>
 </ng-template>

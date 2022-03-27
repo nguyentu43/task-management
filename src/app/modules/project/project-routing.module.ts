@@ -6,6 +6,7 @@ import { ListComponent } from './pages/list/list.component';
 import { ProjectResolver } from '../../core/resolvers/project.resolver';
 import { TaskPageComponent } from './pages/task/task.component';
 import { TaskResolver } from 'src/app/core/resolvers/task.resolver';
+import { EditProjectGuard } from 'src/app/core/guards/edit-project.guard';
 
 const routes:Routes = [
     {
@@ -26,6 +27,7 @@ const routes:Routes = [
     {
         path: ':id/edit',
         component: EditComponent,
+        canActivate: [EditProjectGuard],
         resolve: {
             project: ProjectResolver
         }

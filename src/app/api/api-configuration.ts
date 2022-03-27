@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ApiConfiguration {
-  rootUrl: string = 'http://127.0.0.1:8001';
+  rootUrl: string = 'https://limitless-reaches-35266.herokuapp.com';
 }
 
 export interface ApiConfigurationInterface {

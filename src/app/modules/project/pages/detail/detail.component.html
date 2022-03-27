@@ -1,8 +1,8 @@
-<div class="project-detail">
+<div class="project-detail" *ngIf="profileState$ | async as profileState">
   <div class="panel panel-white header">
     <h3 nz-typography>{{ project.title }}</h3>
     <div class="action">
-      <a [routerLink]="['/projects', project.id, 'edit']" nz-button nzShape="circle">
+      <a nz-tooltip nzTooltipTitle="Edit this project" [routerLink]="['/projects', project.id, 'edit']" [hidden]="profileState.data?.id !== project.owner?.id" nzType="primary" nz-button nzShape="circle">
         <i nz-icon nzType="edit" nzTheme="outline"></i>
       </a>
       <app-tags-management></app-tags-management>
@@ -16,11 +16,14 @@
     <ng-container *ngIf="!isLoading; else loadingTpl">
       <div nz-row>
         <app-section *ngFor="let section of sections" [section]="section" (remove)="removeSection($event)"
-          [projectPk]="project.id + ''"></app-section>
+           [projectPk]="project.id + ''"></app-section>
+      </div>
+      <div class="panel" [hidden]="sections.length > 0" >
+        <app-empty-data description="Click + button to add a section"></app-empty-data>
       </div>
     </ng-container>
     <ng-template #loadingTpl>
-      <div nz-row class="skeleton" [nzGutter]="8">
+      <div nz-row class="panel" [nzGutter]="8">
         <div nz-col nzSm="12" nzMd="8">
           <nz-skeleton></nz-skeleton>
           <nz-skeleton></nz-skeleton>

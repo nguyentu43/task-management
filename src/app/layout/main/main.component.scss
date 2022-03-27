@@ -14,13 +14,18 @@ nz-header{
 nz-header {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 
 nz-content {
-  margin: 15px;
-  padding: 15px;
+  margin: 10px;
 }
 
 nz-footer {
   text-align: center;
+  padding-top: 10px;
+  padding-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

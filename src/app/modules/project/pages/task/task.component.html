@@ -1,36 +1,42 @@
-<div class="panel panel-task">
+<div class="panel panel-task" *ngIf="profileState$ | async as profileState">
   <div nz-row [nzGutter]="[10,10]">
-    <div nz-col nzXs="24" nzMd="16" class="left-side" *ngIf="profileState$ | async as owner">
+    <div nz-col nzXs="24" nzMd="16" class="left-side">
       <div class="panel panel-white">
+        <p>
+          <nz-breadcrumb>
+            <nz-breadcrumb-item>
+              <a [routerLink]="['/projects', this.task.project?.id]"><i nz-icon nzType="project" nzTheme="outline"></i>
+                {{ this.task.project?.title }}</a>
+            </nz-breadcrumb-item>
+            <nz-breadcrumb-item>{{ this.task.title }}</nz-breadcrumb-item>
+          </nz-breadcrumb>
+        </p>
+
         <nz-select [ngModel]="task.status" (ngModelChange)="changeTask(setTask({status:$event}))"
-        [nzCustomTemplate]="statusTpl">
-        <nz-option *ngFor="let item of colors | keyvalue" [nzLabel]="item.key + ''" [nzValue]="item.key">
-        </nz-option>
-      </nz-select>
-      <ng-template #statusTpl let-selected>
-        <nz-tag [nzColor]="colors[selected.nzValue?? 'UnComplete']">{{selected.nzValue}}</nz-tag>
-      </ng-template>
+          [nzCustomTemplate]="statusTpl">
+          <nz-option *ngFor="let item of colors | keyvalue" [nzLabel]="item.key + ''" [nzValue]="item.key">
+          </nz-option>
+        </nz-select>
+        <ng-template #statusTpl let-selected>
+          <nz-tag [nzColor]="colors[selected.nzValue?? 'UnComplete']">{{selected.nzValue}}</nz-tag>
+        </ng-template>
 
-      <div
-      class="title"
-      nz-typography
-      [nzEditable]="task.owner?.id === owner.data?.id"
-      [nzContent]="task.title"
-      (nzContentChange)="changeTask(setTask({title: $event}))"></div>
+        <div class="title" nz-typography nzEditable [nzContent]="task.title"
+          (nzContentChange)="changeTask(setTask({title: $event}))"></div>
 
-      <nz-divider nzOrientation="left" nzPlain nzText="Description"></nz-divider>
-      <div
-      nz-typography
-       [nzEditable]="task.owner?.id === owner.data?.id"
-         [nzContent]="task.description!"
-        (nzContentChange)="changeTask(setTask({description:$event}))"></div>
+        <nz-divider nzOrientation="left" nzPlain nzText="Description"></nz-divider>
+        <!-- <div nz-typography nzEditable [nzContent]="task.description!"
+          (nzContentChange)="changeTask(setTask({description:$event}))"></div> -->
+
+        <app-md-editor (onChangeContent)="changeTask(setTask({description:$event}))" [content]="task.description!">
+        </app-md-editor>
       </div>
 
       <div class="panel panel-white border border-primary">
         <nz-divider nzOrientation="left" nzPlain nzText="Todo"></nz-divider>
-      <app-todo-list></app-todo-list>
+        <app-todo-list></app-todo-list>
       </div>
-      
+
 
       <div class="panel panel-white">
         <nz-divider nzOrientation="left" nzPlain nzText="Attachments"></nz-divider>
@@ -46,19 +52,19 @@
 
       <div class="panel panel-white">
         <nz-divider nzOrientation="left" nzText="Owner" nzPlain></nz-divider>
-        
+
         <div class="owner-avatar">
           <nz-avatar nzShape="square" [nzSrc]="task.owner?.picture"></nz-avatar>
           {{ task.owner?.nickname }}
         </div>
         <nz-divider nzOrientation="left" nzText="Due datetime" nzPlain></nz-divider>
-        
+
         <nz-tag nzColor="warning">
           <nz-date-picker [ngModel]="task.due_datetime" (ngModelChange)="changeTask(setTask({due_datetime:$event}))"
             nzShowTime nzBorderless>
           </nz-date-picker>
         </nz-tag>
-        
+
         <nz-divider nzOrientation="left" nzPlain nzText="Tags"></nz-divider>
         <nz-select [ngModel]="task.tags" (ngModelChange)="changeTask(setTask({'tags': $event}))"
           [nzCustomTemplate]="selectTagsTmp" nzPlaceHolder="Add a tag" nzMode="tags" style="min-width: 100px"
@@ -71,16 +77,11 @@
           <nz-tag [nzColor]="selected.nzValue.color">{{ selected.nzValue.name }}</nz-tag>
         </ng-template>
 
-        <nz-divider nzOrientation="left" nzPlain nzText="Remove this task"></nz-divider>
-        
-          <button
-          nz-button
-          nzDanger
-          nz-popconfirm
-          nzPopconfirmTitle="Do you want to delete?"
-          nzPopconfirmTrigger="click"
-          (nzOnConfirm)="removeTask()"
-          >Remove</button>
+        <ng-container *ngIf="task.owner?.id === profileState.data?.id">
+          <nz-divider nzOrientation="left" nzPlain nzText="Remove this task"></nz-divider>
+          <button nz-button nzDanger nz-popconfirm nzPopconfirmTitle="Do you want to delete?"
+            nzPopconfirmTrigger="click" (nzOnConfirm)="removeTask()">Confirm</button>
+        </ng-container>
 
       </div>
       <div class="panel panel-white">

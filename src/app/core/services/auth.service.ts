@@ -62,7 +62,7 @@ export class AuthService {
     this.removeToken();  
     this.auth0.logout({
       clientID: environment.auth0ClientId,
-      returnTo: 'http://localhost:4200'
+      returnTo: environment.auth0RedirectUri
     });
   }
 

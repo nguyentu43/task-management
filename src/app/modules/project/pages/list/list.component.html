@@ -3,16 +3,14 @@
         <ng-container *ngIf="projects.length > 0; else empty">
             <div class="header">
                 <h2 nz-typography>Your projects</h2>
-                <a nz-button nzShape="circle" [routerLink]="['/projects/create']">
+                <a nz-button nzShape="circle" nz-tooltip nzTooltipTitle="Add new project" [routerLink]="['/projects/create']">
                     <i nz-icon nzType="plus" nzTheme="outline"></i>
                 </a>
             </div>
             
-            <div nz-row nzGutter="8">
+            <div nz-row [nzGutter]="[10,10]">
                 <div nz-col nzXs="24" nzMd="12" *ngFor="let project of projects">
-                    <div class="project">
-                        <app-project-card [project]="project" ></app-project-card>
-                    </div>
+                    <app-project-card [project]="project" ></app-project-card>
                 </div>
             </div>
         </ng-container>
@@ -21,18 +19,26 @@
         </ng-template>
     </ng-container>
     <ng-template #loading>
-        <div nz-row nzGutter="8">
+        <div nz-row [nzGutter]="[10,10]">
             <div nz-col nzXs="24" nzMd="12">
-                <nz-skeleton></nz-skeleton>
+                <div class="panel panel-white border">
+                    <nz-skeleton></nz-skeleton>
+                </div>
             </div>
             <div nz-col nzXs="24" nzMd="12">
-                <nz-skeleton></nz-skeleton>
+                <div class="panel panel-white border">
+                    <nz-skeleton></nz-skeleton>
+                </div>
             </div>
             <div nz-col nzXs="24" nzMd="12">
-                <nz-skeleton></nz-skeleton>
+                <div class="panel panel-white border">
+                    <nz-skeleton></nz-skeleton>
+                </div>
             </div>
             <div nz-col nzXs="24" nzMd="12">
-                <nz-skeleton></nz-skeleton>
+                <div class="panel panel-white border">
+                    <nz-skeleton></nz-skeleton>
+                </div>
             </div>
         </div>
     </ng-template>    

@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
-import { interval, Observable, Observer, Subscription } from 'rxjs';
+import { forkJoin, interval, Observable, Observer, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Activity, Project, Task } from 'src/app/api/models';
 import { ApiService } from 'src/app/api/services';
 
 @Component({
@@ -13,11 +14,27 @@ export class DashboardComponent implements OnDestroy{
   nowDateTime: Date = new Date()
   private nowSubscription: Subscription
 
+  projects: Project[] = []
+  tasks: Task[] = []
+  loading = false
+
   constructor(public api: ApiService) {
-    this.nowSubscription = interval(1000 * 60)
+    this.nowSubscription = interval(1000)
     .pipe(map(() => new Date()))
     .subscribe(dt => {
       this.nowDateTime = dt;
+    });
+
+    this.loading = true;
+
+    forkJoin([
+      this.api.apiProjectsList(),
+      this.api.apiTasksList()
+    ])
+    .subscribe(([projects, tasks]) => {
+      this.projects = projects;
+      this.tasks = tasks;
+      this.loading =false;
     });
   }
 

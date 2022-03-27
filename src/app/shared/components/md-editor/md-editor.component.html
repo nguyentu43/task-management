@@ -1,0 +1,13 @@
+<ng-container *ngIf="isEditting === true; else viewTpl">
+  <div>
+    <nu-markdown [(ngModel)]="content" [options]="options"></nu-markdown>
+    <button style="margin-top: 10px" nzType="primary" nz-button
+      (click)="onChangeContent.emit(content);isEditting=false">Save</button>
+  </div>
+</ng-container>
+<ng-template #viewTpl>
+  <div>
+    <nu-markdown-preview [value]="content ?? ''"></nu-markdown-preview>
+    <i nz-icon nzType="edit" (click)="isEditting=true" nz-tooltip nzTooltipTitle="Edit" nzTheme="outline"></i>
+  </div>
+</ng-template>

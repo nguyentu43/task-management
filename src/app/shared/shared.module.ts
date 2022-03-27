@@ -15,6 +15,11 @@ import { ProjectCardComponent } from './components/project-card/project-card.com
 import {NzGridModule} from 'ng-zorro-antd/grid';
 import {NzDividerModule} from 'ng-zorro-antd/divider';
 import { NzTagModule } from 'ng-zorro-antd/tag';
+import { TaskComponent } from './components/task/task.component';
+import { taskStatus, TASK_STATUS } from './task-status.contants';
+import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
+import { MdEditorComponent } from './components/md-editor/md-editor.component';
+import {NuMarkdownModule} from '@ng-util/markdown';
 
 
 @NgModule({
@@ -22,7 +27,9 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
     EmptyComponent,
     AvatarGroupComponent,
     ProfileSelectComponent,
-    ProjectCardComponent
+    ProjectCardComponent,
+    TaskComponent,
+    MdEditorComponent
   ],
   imports: [
     CommonModule,
@@ -37,8 +44,13 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
     NzAvatarModule,
     FormsModule,
     NzIconModule,
-    NzTagModule
+    NzTagModule,
+    NuMarkdownModule,
+    NzToolTipModule
   ],
-  exports: [EmptyComponent, AvatarGroupComponent, ProfileSelectComponent, ProjectCardComponent]
+  providers: [
+    {provide: TASK_STATUS, useValue: taskStatus}
+  ],
+  exports: [ MdEditorComponent, EmptyComponent, AvatarGroupComponent, ProfileSelectComponent, ProjectCardComponent, TaskComponent]
 })
 export class SharedModule { }

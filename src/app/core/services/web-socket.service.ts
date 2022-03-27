@@ -26,7 +26,6 @@ export class WebSocketService {
 
   public connectActivitiesWs = () => {
     const url = environment.wsEndpoint + '/activities/?token=' + this.getToken();
-    this.message.info('Connect activity ws');
     if(!this.activitiesWs$ || this.activitiesWs$.closed){
       this.activitiesWs$ = this.getWebSocket(url, {
         next: () => {
@@ -53,7 +52,6 @@ export class WebSocketService {
 
   public connectChatWs = (project_id:string) => {
     const url = environment.wsEndpoint + '/chat/projects/' + project_id +'/?token=' + this.getToken();
-    this.message.info('Chat ws connect');
     if(!this.chatWs$ || this.chatWs$.closed){
       this.chatWs$ = this.getWebSocket(url, {
         next: () => {

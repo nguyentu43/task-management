@@ -1,4 +1,4 @@
-<a nzShape="circle" nz-button (click)="showModal()">
+<a nzShape="circle" nz-tooltip nzTooltipTitle="Tags" nzDanger nz-button (click)="showModal()">
   <i nz-icon nzType="tag" nzTheme="outline"></i>
 </a>
 <nz-modal [nzWidth]="500" [(nzVisible)]="isVisible" (nzOnCancel)="handleCancel()" [nzTitle]="'Tags management'">
@@ -6,7 +6,7 @@
     <button (click)="addTag()" nz-button style="margin-bottom: 10px">Add a tag</button>
     <div nz-row nzGutter="2" *ngFor="let tag of tags" class="management">
       <div nz-col nzFlex="3" class="left">
-        <input [ngModel]="tag.name" (ngModelChange)="changeTag(setTag(tag, {name: $event}))" nz-input />
+        <p nz-typography nzEditable [nzContent]="tag.name" (nzContentChange)="changeTag(setTag(tag, {name: $event}))"></p>
         <div>
           <app-color-picker [color]="tag.color" (colorChange)="changeTag(setTag(tag, {color: $event}))">
           </app-color-picker>

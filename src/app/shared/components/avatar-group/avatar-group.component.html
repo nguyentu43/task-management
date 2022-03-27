@@ -1,6 +1,3 @@
 <nz-avatar-group *ngFor="let profile of participants">
-    <nz-avatar 
-    nzIcon="user"
-    nzShape="square"
-    [nzSrc]="profile.picture"></nz-avatar>
-  </nz-avatar-group>
+  <nz-avatar nzIcon="user" nz-tooltip [nzTooltipTitle]="profile.nickname" nzShape="square" [nzSrc]="profile.picture"></nz-avatar>
+</nz-avatar-group>

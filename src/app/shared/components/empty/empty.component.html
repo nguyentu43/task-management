@@ -9,11 +9,11 @@
     </span>
     </ng-template>
     <ng-template #footerTpl>
-        <ng-container *ngIf="routerLink; else buttonTpl">
-            <a nz-button nzType="primary" [routerLink]="routerLink">Create now</a>
+        <ng-container *ngIf="link; else buttonTpl">
+            <a nz-button nzType="primary" [routerLink]="link">Create now</a>
         </ng-container>
         <ng-template #buttonTpl>
-            <button nz-button nzType="primary" (click)="clickButton.emit('')">Create Now</button>
+            <button nz-button nzType="primary" (click)="clickButton.emit('')">{{ title ?? 'Create now' }}</button>
         </ng-template>
     </ng-template>
 </nz-empty>

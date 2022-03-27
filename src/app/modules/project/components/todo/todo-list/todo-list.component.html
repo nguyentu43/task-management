@@ -1,5 +1,5 @@
 <nz-spin nzSimple *ngIf="loading"></nz-spin>
-<nz-progress [nzPercent]="percentTodo"></nz-progress>
+<nz-progress [hidden]="todoItems.length === 0" [nzPercent]="percentTodo"></nz-progress>
 <app-todo-input *ngFor="let todo of todoItems" [todo]="todo" (remove)="removeTodo($event.id + '')"
     (change)="changeTodo($event)"></app-todo-input>
 <button nz-button (click)="addTodo()">

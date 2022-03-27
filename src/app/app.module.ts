@@ -21,12 +21,12 @@ import { appReducer } from './store/app.reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { ProfileEffects } from './store/profile/profile.effects';
-
+import { NuMarkdownModule } from '@ng-util/markdown';
 
 registerLocaleData(en);
 
 const ngHttpCachingConfig: NgHttpCachingConfig = {
-  lifetime: 1000 * 20 // cache expire after 10 seconds
+  lifetime: 1000 * 20
 };
 
 @NgModule({
@@ -46,8 +46,8 @@ const ngHttpCachingConfig: NgHttpCachingConfig = {
     StoreDevtoolsModule.instrument({
       maxAge: 25,
     }),
-    EffectsModule.forRoot([ProfileEffects])
-    
+    EffectsModule.forRoot([ProfileEffects]),
+    NuMarkdownModule.forRoot()
   ],
   providers: [
     { provide: NZ_I18N, useValue: en_US }, 

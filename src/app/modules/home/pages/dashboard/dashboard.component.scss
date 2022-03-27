@@ -1,23 +1,23 @@
-@import 'src/styles/contants.scss';
-
-#time{
-    font-size: 50px;
-}
-
-.card-wrapper{
-    margin-bottom: 10px;
-}
-
-.project-list{
-    background-color: #4da6ff;
-    padding: 10px !important;
-    h3{
-        color: white
-    }
-    overflow: auto;
-    max-height: 410px;
-}
+@import 'src/styles/constants.scss';
 
 .dashboard{
-    min-height: $fixed-height;
+
+    .big-text{
+        font-size: 50px;
+    }
+    min-height: calc($fixed-height + 10px);
+    overflow: auto;
+    .tasks{
+        flex-flow: column wrap;
+        max-height: calc($fixed-height - 15px);
+        overflow: auto;
+        display: flex;
+        app-task{
+            width: 50%;
+            margin: 5px;
+        }
+        @media screen and (max-width: 480px) {
+            app-task{width: 75%;}
+        }
+    }
 }

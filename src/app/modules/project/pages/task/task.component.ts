@@ -8,7 +8,7 @@ import { ApiService } from 'src/app/api/services';
 import { AppState } from 'src/app/store/app.reducer';
 import { ProfileState } from 'src/app/store/profile/profile.reducer';
 import { TagsState } from 'src/app/store/tags/tags.actions';
-import { TASK_STATUS } from '../../task-status.contants';
+import { TASK_STATUS } from '../../../../shared/task-status.contants';
 
 @Component({
   selector: 'app-task-page',
@@ -52,6 +52,7 @@ export class TaskPageComponent implements OnInit {
         });
       })
     ).subscribe((task) => {
+      this.task=task;
       this.message.success('Task was saved');
     })
   }
@@ -62,16 +63,14 @@ export class TaskPageComponent implements OnInit {
   compareWithTagsSelect = (t1: Tag, t2: Tag) => t1?.id === t2?.id
 
   setTask(props: Partial<Task>){
-    if(props.title){
-      this.task.title = props.title!;
-    }
-    if(props.description){
-      this.task.description = props.description
-    }
     return {...this.task, ...props};
   }
 
   changeTask(task: Task){
+    if(!task.title){
+      this.message.warning('This field is required');
+      return;
+    }
     this.taskChange$.next(task);
   }
 
@@ -83,6 +82,10 @@ export class TaskPageComponent implements OnInit {
     .subscribe((_) => {
       this.router.navigate(['/projects', this.task.project?.id]);
     });
+  }
+
+  onChange(content:string){
+    console.log(content);
   }
 
 }

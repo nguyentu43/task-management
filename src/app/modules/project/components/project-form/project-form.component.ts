@@ -37,7 +37,7 @@ export class ProjectFormComponent implements OnChanges {
       this.isSubmitting = true;
       const validDate = this.form.value;
       validDate.participants = validDate.participants.map((p:Profile) => p.id);
-      if(!this.project){
+      if(!this.project.id){
         this.api.apiProjectsCreate(validDate).subscribe(this.handleSave);
       }
       else{

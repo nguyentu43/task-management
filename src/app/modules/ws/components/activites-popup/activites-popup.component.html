@@ -1,4 +1,4 @@
-<nz-badge [nzCount]="activityCount">
+<nz-badge nzDot [nzShowDot]="activityCount > 0">
     <button
         nz-button
         nz-popover
@@ -8,7 +8,7 @@
         nzPopoverPlacement="bottom"
         (nzPopoverVisibleChange)="activityCount = 0"
         [(nzPopoverVisible)]="isVisible"
-    >Activities</button>
+    ><i nz-icon nzType="notification" nzTheme="twotone"></i></button>
 </nz-badge>
 <ng-template #contentTpl>
     <div class="list">

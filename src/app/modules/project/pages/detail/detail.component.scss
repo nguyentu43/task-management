@@ -1,4 +1,4 @@
-@import 'src/styles/contants.scss';
+@import 'src/styles/constants.scss';
 
 .project-detail{
     min-height: $fixed-height;
@@ -21,7 +21,7 @@
         [nz-row]{
             flex-wrap: nowrap;
             app-section{
-                flex: 1 0 300px;
+                flex: 0 0 350px;
             }
         } 
     }

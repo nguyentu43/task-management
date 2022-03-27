@@ -14,12 +14,12 @@ app-profile-select .ant-select-multiple .ant-select-selection-item{
 }
 
 $colors-theme: (
-    "primary": dodgerblue,
-    "success": springgreen,
-    "danger": darkred,
-    "info": aquamarine,
-    "secondary": beige,
-    "dark": navy,
+    "primary": #4D96FF,
+    "success": #6BCB77,
+    "warning": #F76E11,
+    "danger": #890F0D,
+    "info": #85F4FF,
+    "dark": #1A132F,
     "white": white,
 );
 
@@ -48,6 +48,7 @@ $colors-theme: (
 .border{
     border-width: 2px;
     border-style: solid;
+    border-color: #eee;
 }
 
 .border-thick{
@@ -56,4 +57,8 @@ $colors-theme: (
 
 div.ant-typography{
     margin-bottom: 0;
+}
+
+.ant-typography-edit{
+    color:inherit;
 }

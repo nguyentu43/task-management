@@ -1,11 +1,23 @@
-.color-circle{
-    width: 35px;
+.container {
+  display: flex;
+  flex-wrap: wrap;
+    .color-circle {
+        flex: 0 0 35px;
     height: 35px;
     border-radius: 35px;
-    margin-right: 5px;
+    margin: 2.5px;
     display: inline-block;
+    position: relative;
 
-    &--selected{
-        border: 2px solid gray;
+    &--selected::after{
+      content: "";
+      position: absolute;
+      border: 2px solid white;
+      border-radius: 32px;
+      width: 32px;
+      height: 32px;
+      transform: translate(1.5px,1.5px);
+      color: white;
     }
+  }
 }

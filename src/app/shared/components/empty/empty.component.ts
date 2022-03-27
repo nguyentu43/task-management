@@ -8,7 +8,8 @@ import { EventEmitter } from '@angular/core';
   styleUrls: ['./empty.component.scss']
 })
 export class EmptyComponent {
-  @Input() routerLink?: string[]
+  @Input() link?: string[]
+  @Input() title?: string
   @Input() description: string = ''
   @Output() readonly clickButton = new EventEmitter()
     constructor(private router:Router) {
