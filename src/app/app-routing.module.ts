@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { LayoutModule } from './layout/layout.module';
 import { MainComponent } from './layout/main/main.component';
-import { NotFoundComponent } from './layout/not-found/not-found.component';
+import { ErrorComponent } from './layout/error/error.component';
 
 const routes: Routes = [
   {
@@ -40,8 +40,8 @@ const routes: Routes = [
           ),
       },
       {
-        path: '404',
-        component: NotFoundComponent,
+        path: ':error',
+        component: ErrorComponent,
       },
     ],
   },

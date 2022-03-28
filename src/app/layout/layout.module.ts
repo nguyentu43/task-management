@@ -12,11 +12,11 @@ import { MainComponent } from './main/main.component';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { RouterModule } from '@angular/router';
 import { WsModule } from '../modules/ws/ws.module';
-import { NotFoundComponent } from './not-found/not-found.component';
 import { NzResultModule } from 'ng-zorro-antd/result';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
-  declarations: [MainComponent, NotFoundComponent],
+  declarations: [MainComponent, ErrorComponent],
   imports: [
     CommonModule,
     NzLayoutModule,

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   CanActivate,
+  Router,
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
@@ -15,11 +16,12 @@ import { AuthService } from '../services/auth.service';
   providedIn: 'root',
 })
 export class EditProjectGuard implements CanActivate {
-  constructor(private store: Store<AppState>, private api: ApiService) {}
+  constructor(private store: Store<AppState>, private api: ApiService, private router:Router) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    state: RouterStateSnapshot,
+    
   ):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
@@ -35,7 +37,11 @@ export class EditProjectGuard implements CanActivate {
             of(state),
           ])
         ),
-        map(([project, state]) => project.owner?.id === state.data?.id)
+        map(([project, state]) => {
+          if(project.owner?.id === state.data?.id) return true;
+          this.router.navigate(['/403']);
+          return false;
+        })
       );
   }
 }
