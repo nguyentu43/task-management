@@ -5,8 +5,10 @@
       <div class="big-text">{{ nowDateTime | date: 'hh:mm:ss' }}</div>
     </div>
     <div class="panel-success panel">
-      <h3 nz-typography style="color:white">Projects</h3>
-      <div class="big-text">{{ projects.length }}</div>
+      <a routerLink="/projects">
+        <h3 nz-typography style="color:white">Projects</h3>
+        <div class="big-text">{{ projects.length }}</div>
+      </a>
     </div>
     <div class="panel-dark panel">
       <h3 nz-typography style="color:white">Tasks</h3>

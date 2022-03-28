@@ -23,6 +23,7 @@
     "@ngrx/store": "^13.0.2",
     "@ngrx/store-devtools": "^13.0.2",
     "auth0-js": "^9.19.0",
+    "mobile-drag-drop": "^2.3.0-rc.2",
     "ng-http-caching": "^13.0.4",
     "ng-zorro-antd": "^13.1.1",
     "ngx-drag-drop": "^13.0.0",

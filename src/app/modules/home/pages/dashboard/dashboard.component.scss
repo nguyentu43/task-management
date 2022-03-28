@@ -1,23 +1,30 @@
 @import 'src/styles/constants.scss';
 
-.dashboard{
+.dashboard {
 
-    .big-text{
-        font-size: 50px;
-    }
-    min-height: calc($fixed-height + 10px);
+  .big-text {
+    font-size: 50px;
+    color: white;
+  }
+
+  min-height: calc($fixed-height + 10px);
+  overflow: auto;
+
+  .tasks {
+    flex-flow: column wrap;
+    max-height: calc($fixed-height - 15px);
     overflow: auto;
-    .tasks{
-        flex-flow: column wrap;
-        max-height: calc($fixed-height - 15px);
-        overflow: auto;
-        display: flex;
-        app-task{
-            width: 50%;
-            margin: 5px;
-        }
-        @media screen and (max-width: 480px) {
-            app-task{width: 75%;}
-        }
+    display: flex;
+
+    app-task {
+      width: 50%;
+      margin: 5px;
     }
+
+    @media screen and (max-width: 480px) {
+      app-task {
+        width: 75%;
+      }
+    }
+  }
 }
