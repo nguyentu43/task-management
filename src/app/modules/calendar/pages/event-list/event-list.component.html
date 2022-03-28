@@ -1,16 +1,27 @@
 <div class="calendar">
+  <div style="text-align:right">
+    <nz-badge nzStatus="processing" nzText="Todo" style="margin-right: 10px"></nz-badge>
+    <nz-badge nzStatus="warning" nzText="Task"></nz-badge>
+  </div>
   <nz-calendar>
     <ul *nzDateCell="let date" class="events">
-      <ng-container *ngIf="getTodos(date, 'dd/MM/YYYY') as todos">
+      <ng-container *ngIf="getItemsFromMap(todoMap, date, 'dd/MM/YYYY') as todos">
         <li *ngFor="let item of todos">
-          <nz-badge nzStatus="processing" (click)="goToTask(item)" [nzText]="item.title"></nz-badge>
+          <nz-badge nzStatus="processing" (click)="goToTask(item.task)" [nzText]="item.title"></nz-badge>
+        </li>
+      </ng-container>
+      <ng-container *ngIf="getItemsFromMap(taskMap, date, 'dd/MM/YYYY') as task">
+        <li *ngFor="let item of task">
+          <nz-badge nzStatus="warning" (click)="goToTask(item)" [nzText]="item.title"></nz-badge>
         </li>
       </ng-container>
     </ul>
     <ng-container *nzMonthCell="let month">
-      <div *ngIf="getTodos(month, 'MM/YYYY') as todos" class="notes-month">
-        <section>{{ todos.length }}</section>
-        <span>Todos</span>
+      <div *ngIf="getItemsFromMap(todoMap, month, 'MM/YYYY') as todos" class="notes-month">
+        <section>{{ todos.length }} Todo{{ todos.length > 1 ? 's' : '' }}</section>
+      </div>
+      <div *ngIf="getItemsFromMap(todoMap, month, 'MM/YYYY') as tasks" class="notes-month">
+        <section>{{ tasks.length }} Task{{ tasks.length > 1 ? 's' : '' }}</section>
       </div>
     </ng-container>
   </nz-calendar>

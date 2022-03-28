@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, AfterViewChecked, Inject, AfterContentInit, OnDestroy } from '@angular/core';
+import { Component, AfterViewChecked, Inject, AfterContentInit, OnDestroy, ViewChildren, QueryList, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import {  NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { filter, Observable, Subscription } from 'rxjs';
@@ -15,7 +15,7 @@ import { ProfileState } from 'src/app/store/profile/profile.reducer';
   templateUrl: './chat-popup.component.html',
   styleUrls: ['./chat-popup.component.scss']
 })
-export class ChatPopupComponent implements AfterViewChecked, OnDestroy {
+export class ChatPopupComponent implements OnDestroy, AfterViewInit {
 
   showButton = false
   messageCount = 0
@@ -29,12 +29,15 @@ export class ChatPopupComponent implements AfterViewChecked, OnDestroy {
   loading = false
   profileState$: Observable<ProfileState>
   isEnd = false
+  @ViewChildren('messages') viewMessages!:QueryList<any>
+  viewMessagesSubscription?: Subscription
 
   constructor(
     private router: Router,
     private store:Store<AppState>,
     @Inject(DOCUMENT) private document:Document,
     private auth:AuthService,
+    private ref:ChangeDetectorRef,
     private ws:WebSocketService, private api:ApiService) {
 
     this.profileState$ = store.select(state => state.profile);
@@ -59,8 +62,18 @@ export class ChatPopupComponent implements AfterViewChecked, OnDestroy {
       this.messageSubscription = this.ws.chatObservable().subscribe(message => {
         this.messages = this.messages.concat(message);
         if(!this.isVisible) this.messageCount++;
+        this.subscribeChangeMessages();
       });
+    });
+  }
 
+  ngAfterViewInit(): void {
+    this.subscribeChangeMessages();
+  }
+
+  private subscribeChangeMessages() {
+    this.viewMessagesSubscription = this.viewMessages.changes.subscribe((_) => {
+      this.scrollToBottom();
     });
   }
 
@@ -70,24 +83,22 @@ export class ChatPopupComponent implements AfterViewChecked, OnDestroy {
 
   getMessages() {
     this.loading = true;
+    this.viewMessagesSubscription?.unsubscribe();
     this.api.apiProjectsMessagesList({
       projectPk: this.projectId,
       offset: this.offset,
       limit: this.limit
     })
       .subscribe(data => {
-        this.loading = false;
         this.offset += data.results.length;
         this.messages = [...data.results.reverse(),...this.messages];
-        if(data.results.length === 0) this.isEnd = true;
+        if(data.results.length === 0) {this.isEnd = true;}
+        this.loading = false;
       });
   }
 
-  ngAfterViewChecked(): void {
-    //this.scrollToBottom();
-  }
-
   send(){
+    this.viewMessagesSubscription?.unsubscribe();
     this.ws.chatSend({content: this.content});
     this.content = '';
   }

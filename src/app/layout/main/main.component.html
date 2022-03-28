@@ -1,7 +1,7 @@
   <nz-layout *ngIf="profileState$ | async as profileState" id="main">
     <nz-sider nzCollapsible nzBreakpoint="lg" [nzCollapsedWidth]="0" [hidden]="!profileState.isLogin">
       <ul nz-menu nzTheme="dark" nzMode="inline">
-        <li nz-menu-item *ngFor="let item of menu" [routerLink]="item.link">
+        <li nz-menu-item *ngFor="let item of menu" [routerLink]="item.link" nzMatchRouterExact nzMatchRouter>
           <i nz-icon [nzType]="item.icon"></i>
           <span>{{item.title}}</span>
         </li>

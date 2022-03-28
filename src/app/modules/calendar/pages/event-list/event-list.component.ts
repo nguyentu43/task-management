@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { TodoItem } from 'src/app/api/models';
+import { Task, TodoItem } from 'src/app/api/models';
 import { ApiService } from 'src/app/api/services';
 
 @Component({
@@ -12,6 +12,7 @@ import { ApiService } from 'src/app/api/services';
 export class EventListComponent implements OnInit {
 
   todoMap:any = {}
+  taskMap:any={}
   constructor(private api:ApiService, @Inject(LOCALE_ID) private locale:string, private router:Router) {
     this.api.apiTodoItemsList().subscribe(
       data => {
@@ -26,18 +27,33 @@ export class EventListComponent implements OnInit {
         }
         this.todoMap = todoMap;
       }
+    );
+
+    this.api.apiTasksList().subscribe(
+      data => {
+        const taskMap:any={};
+        for(let task of data){
+          const date = formatDate(task.due_datetime ?? task.created_at!, 'dd/MM/YYYY', locale);
+          const month = formatDate(task.due_datetime ?? task.created_at!, 'MM/YYYY', locale);
+          if(!taskMap[date]) taskMap[date] = [];
+          if(!taskMap[month]) taskMap[month] = [];
+          taskMap[date].push(task);
+          taskMap[month].push(task);
+        }
+        this.taskMap = taskMap;
+      }
     )
   }
 
   ngOnInit(): void {
   }
 
-  getTodos(date:string, format:string){
-    return this.todoMap[formatDate(date, format, this.locale)];
+  getItemsFromMap(dataMap: any, date:string, format:string){
+    return dataMap[formatDate(date, format, this.locale)];
   }
 
-  goToTask(todo:TodoItem){
-    this.router.navigate([`/projects/${todo.task?.project?.id}/tasks/${todo.task?.id}`]);
+  goToTask(task:Task){
+    this.router.navigate([`/projects/${task?.project?.id}/tasks/${task?.id}`]);
   }
 
 }
