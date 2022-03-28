@@ -11,8 +11,14 @@
   [compareWith]="compareProfile"
 >
   <ng-container *ngFor="let p of profiles">
-    <nz-option *ngIf="!isLoading" [nzValue]="p" [nzLabel]="p.nickname" nzCustomContent>
-        <nz-avatar [nzSrc]="p.picture" [nzShape]="'square'"></nz-avatar> {{ p.nickname }}
+    <nz-option
+      *ngIf="!isLoading"
+      [nzValue]="p"
+      [nzLabel]="p.nickname"
+      nzCustomContent
+    >
+      <nz-avatar [nzSrc]="p.picture" [nzShape]="'square'"></nz-avatar>
+      {{ p.nickname }}
     </nz-option>
   </ng-container>
   <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
@@ -21,5 +27,9 @@
   </nz-option>
 </nz-select>
 <ng-template #profilesTpl let-selected>
-  <nz-avatar [nzSrc]="selected.nzValue.picture" [nzShape]="'square'"></nz-avatar> {{ selected.nzValue.nickname }}
+  <nz-avatar
+    [nzSrc]="selected.nzValue.picture"
+    [nzShape]="'square'"
+  ></nz-avatar>
+  {{ selected.nzValue.nickname }}
 </ng-template>

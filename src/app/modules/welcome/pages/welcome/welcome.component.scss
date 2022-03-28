@@ -2,14 +2,14 @@
 
 .welcome-page {
   height: $fixed-height;
-    display: flex;
-    justify-content: center;
-    flex-flow: column;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-flow: column;
+  align-items: center;
   * {
     text-align: center;
   }
-  .logo{
+  .logo {
     height: 180px;
   }
 }

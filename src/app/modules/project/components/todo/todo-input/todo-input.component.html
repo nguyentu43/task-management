@@ -1,26 +1,41 @@
 <div nz-row nzGutter="2" class="todo">
-    <div nz-col nzFlex="1" class="left">
-        <label nz-checkbox [ngModel]="todo.is_done" (ngModelChange)="changeTodo(setTodo({ is_done: $event }))"></label>
+  <div nz-col nzFlex="1" class="left">
+    <label
+      nz-checkbox
+      [ngModel]="todo.is_done"
+      (ngModelChange)="changeTodo(setTodo({ is_done: $event }))"
+    ></label>
+  </div>
+  <div nz-col nzFlex="6" class="content">
+    <div
+      nz-typography
+      nzEditable
+      [nzContent]="todo.title"
+      (nzContentChange)="changeTodo(setTodo({ title: $event }))"
+    ></div>
+    <div>
+      <app-profile-select
+        [project_id]="todo.task!.project!.id + ''"
+        [profiles]="todo.participants ?? []"
+        (profilesChange)="changeTodo(setTodo({ participants: $event }))"
+      ></app-profile-select>
     </div>
-    <div nz-col nzFlex="6" class="content">
-        <div
-        nz-typography
-        nzEditable
-        [nzContent]="todo.title"
-        (nzContentChange)="changeTodo(setTodo({title:$event}))"
-        ></div>
-        <div>
-            <app-profile-select [project_id]="todo.task!.project!.id + ''" [profiles]="todo.participants ?? []" (profilesChange)="changeTodo(setTodo({participants: $event}))"></app-profile-select>
-        </div>
-        <nz-date-picker [ngModel]="todo.due_datetime" (ngModelChange)="changeTodo(setTodo({due_datetime: $event}))" nzShowTime>
-        </nz-date-picker>
-    </div>
-    <div nz-col nzFlex="1" class="right">
-        <i nz-icon nzType="delete"
-        nz-popconfirm
-        nzPopconfirmTitle="Do you want to delete?"
-        nzPopconfirmTrigger="click"
-        (nzOnConfirm)="remove.emit(todo)"
-        nzTheme="outline"></i>
-    </div>
+    <nz-date-picker
+      [ngModel]="todo.due_datetime"
+      (ngModelChange)="changeTodo(setTodo({ due_datetime: $event }))"
+      nzShowTime
+    >
+    </nz-date-picker>
+  </div>
+  <div nz-col nzFlex="1" class="right">
+    <i
+      nz-icon
+      nzType="delete"
+      nz-popconfirm
+      nzPopconfirmTitle="Do you want to delete?"
+      nzPopconfirmTrigger="click"
+      (nzOnConfirm)="remove.emit(todo)"
+      nzTheme="outline"
+    ></i>
+  </div>
 </div>

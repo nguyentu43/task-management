@@ -5,17 +5,13 @@ import { AuthService } from 'src/app/core/services/auth.service';
 @Component({
   selector: 'app-welcome',
   templateUrl: './welcome.component.html',
-  styleUrls: ['./welcome.component.scss']
+  styleUrls: ['./welcome.component.scss'],
 })
 export class WelcomeComponent {
+  constructor(private auth: AuthService, private router: Router) {}
 
-  constructor(private auth:AuthService, private router:Router) {
-    
-  }
-
-  login(){
-    if(this.auth.isAuthenticated())
-    {
+  login() {
+    if (this.auth.isAuthenticated()) {
       this.router.navigate(['/home']);
       return;
     }

@@ -2,48 +2,57 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { LayoutModule } from './layout/layout.module';
-import {MainComponent} from './layout/main/main.component';
+import { MainComponent } from './layout/main/main.component';
 import { NotFoundComponent } from './layout/not-found/not-found.component';
 
-const routes:Routes = [
+const routes: Routes = [
   {
     path: '',
     component: MainComponent,
     children: [
       {
         path: '',
-        loadChildren: () => import('./modules/welcome/welcome.module').then(m => m.WelcomeModule)
+        loadChildren: () =>
+          import('./modules/welcome/welcome.module').then(
+            (m) => m.WelcomeModule
+          ),
       },
       {
         path: 'home',
-        canActivate: [ AuthGuard ],
-        loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule)
+        canActivate: [AuthGuard],
+        loadChildren: () =>
+          import('./modules/home/home.module').then((m) => m.HomeModule),
       },
       {
         path: 'projects',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./modules/project/project.module').then(m => m.ProjectModule)
+        loadChildren: () =>
+          import('./modules/project/project.module').then(
+            (m) => m.ProjectModule
+          ),
       },
       {
         path: 'calendar',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./modules/calendar/calendar.module').then(m=>m.CalendarModule)
+        loadChildren: () =>
+          import('./modules/calendar/calendar.module').then(
+            (m) => m.CalendarModule
+          ),
       },
       {
         path: '404',
-        component: NotFoundComponent
-      }
-    ]
-  }
+        component: NotFoundComponent,
+      },
+    ],
+  },
 ];
 
 @NgModule({
-  declarations: [
-  ],
+  declarations: [],
   imports: [
-    RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'}),
-    LayoutModule
+    RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' }),
+    LayoutModule,
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

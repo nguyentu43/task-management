@@ -6,26 +6,25 @@ import { ApiService } from 'src/app/api/services';
 @Component({
   selector: 'app-activities',
   templateUrl: './activities.component.html',
-  styleUrls: ['./activities.component.scss']
+  styleUrls: ['./activities.component.scss'],
 })
 export class ActivitiesComponent implements OnInit {
+  @Input() task!: Task;
+  activities: Activity[] = [];
+  loading = false;
 
-  @Input() task!: Task
-  activities: Activity[] = []
-  loading = false
-
-  constructor(private api:ApiService) { }
+  constructor(private api: ApiService) {}
 
   ngOnInit(): void {
     this.loading = true;
-    this.api.apiProjectsTasksGetActivities({
-      projectPk: this.task.project?.id + '',
-      id: this.task.id + ''
-    })
-    .subscribe(data => {
-      this.activities = data;
-      this.loading = false;
-    });
+    this.api
+      .apiProjectsTasksGetActivities({
+        projectPk: this.task.project?.id + '',
+        id: this.task.id + '',
+      })
+      .subscribe((data) => {
+        this.activities = data;
+        this.loading = false;
+      });
   }
-
 }

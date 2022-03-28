@@ -8,9 +8,8 @@ describe('MdEditorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MdEditorComponent ]
-    })
-    .compileComponents();
+      declarations: [MdEditorComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

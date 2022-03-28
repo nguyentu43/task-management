@@ -1,33 +1,30 @@
-.section{
-    
-    .header{
-        padding: 10px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+.section {
+  .header {
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-        [nzEditable]{
-            color: white;
-            padding: 0;
-            font-weight: bold;
-            font-size: 18px;
-        }
+    [nzEditable] {
+      color: white;
+      padding: 0;
+      font-weight: bold;
+      font-size: 18px;
+    }
+  }
+
+  .content {
+    min-height: 200px;
+    padding: 0 10px 10px 10px;
+    .task {
+      margin-bottom: 10px;
+    }
+    .task:last-child {
+      margin-bottom: 0;
     }
 
-    .content{
-        min-height: 200px;
-        padding: 0 10px 10px 10px;
-        .task{
-            margin-bottom: 10px;
-        }
-        .task:last-child{
-            margin-bottom: 0;
-        }
-
-        .dndDraggingSource{
-            display: none;
-        }
+    .dndDraggingSource {
+      display: none;
     }
+  }
 }
-
-

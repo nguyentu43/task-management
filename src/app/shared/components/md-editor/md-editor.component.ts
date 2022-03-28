@@ -1,28 +1,44 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-md-editor',
   templateUrl: './md-editor.component.html',
-  styleUrls: ['./md-editor.component.scss']
+  styleUrls: ['./md-editor.component.scss'],
 })
 export class MdEditorComponent implements OnInit {
+  @Input() content?: string;
+  @Output() onChangeContent = new EventEmitter();
 
-  @Input() content?:string
-  @Output() onChangeContent = new EventEmitter()
-  
-  isEditting = false
+  isEditting = false;
 
-  options =  {
+  options = {
     lang: 'en_US',
     mode: 'ir',
-    toolbar: ['emoji', 'br', 'bold', '|', 'line',
-     'headings', 'code', 'indent', 
-  'link', 'table', 'code', 'redo', 'undo']
-  }
+    toolbar: [
+      'emoji',
+      'br',
+      'bold',
+      '|',
+      'line',
+      'headings',
+      'code',
+      'indent',
+      'link',
+      'table',
+      'code',
+      'redo',
+      'undo',
+    ],
+  };
 
-  constructor(private ref:ChangeDetectorRef) { }
+  constructor(private ref: ChangeDetectorRef) {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

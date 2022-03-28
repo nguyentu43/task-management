@@ -1,19 +1,21 @@
 <nz-empty
-      nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-      [nzNotFoundContent]="contentTpl"
-      [nzNotFoundFooter]="footerTpl"
-    >
-    <ng-template #contentTpl>
+  nzNotFoundImage="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+  [nzNotFoundContent]="contentTpl"
+  [nzNotFoundFooter]="footerTpl"
+>
+  <ng-template #contentTpl>
     <span>
-        {{ description }}
+      {{ description }}
     </span>
+  </ng-template>
+  <ng-template #footerTpl>
+    <ng-container *ngIf="link; else buttonTpl">
+      <a nz-button nzType="primary" [routerLink]="link">Create now</a>
+    </ng-container>
+    <ng-template #buttonTpl>
+      <button nz-button nzType="primary" (click)="clickButton.emit('')">
+        {{ title ?? 'Create now' }}
+      </button>
     </ng-template>
-    <ng-template #footerTpl>
-        <ng-container *ngIf="link; else buttonTpl">
-            <a nz-button nzType="primary" [routerLink]="link">Create now</a>
-        </ng-container>
-        <ng-template #buttonTpl>
-            <button nz-button nzType="primary" (click)="clickButton.emit('')">{{ title ?? 'Create now' }}</button>
-        </ng-template>
-    </ng-template>
+  </ng-template>
 </nz-empty>

@@ -1,9 +1,18 @@
 <ng-container *ngIf="profileState$ | async as profileState">
   <div class="popup" *ngIf="showButton">
     <nz-badge [nzShowDot]="messageCount > 0" nzDot>
-      <button nz-button nzShape="circle" nz-button nz-popover [(nzPopoverVisible)]="isVisible" nzPopoverTitle="Chat box"
-        [nzPopoverContent]="contentTpl" nzPopoverTrigger="click" nzPopoverPlacement="left"
-        (nzPopoverVisibleChange)="messageCount = 0">
+      <button
+        nz-button
+        nzShape="circle"
+        nz-button
+        nz-popover
+        [(nzPopoverVisible)]="isVisible"
+        nzPopoverTitle="Chat box"
+        [nzPopoverContent]="contentTpl"
+        nzPopoverTrigger="click"
+        nzPopoverPlacement="left"
+        (nzPopoverVisibleChange)="messageCount = 0"
+      >
         <i nz-icon nzType="message" nzTheme="twotone"></i>
       </button>
     </nz-badge>
@@ -11,32 +20,56 @@
   <ng-template #contentTpl>
     <div class="chatbox">
       <nz-list nzItemLayout="horizontal" nzSize="small">
-        <div style="text-align:center">
+        <div style="text-align: center">
           <a (click)="getMessages()" [hidden]="loading || isEnd">Load more</a>
           <nz-spin nzSimple [hidden]="!loading"></nz-spin>
         </div>
-        <app-empty-data [hidden]="messages.length > 0" description="No message" title="Typing to chat"></app-empty-data>
+        <app-empty-data
+          [hidden]="messages.length > 0"
+          description="No message"
+          title="Typing to chat"
+        ></app-empty-data>
         <nz-list-item *ngFor="let item of messages" #messages>
           <nz-list-item-meta>
-            <nz-list-item-meta-avatar [nzSrc]="item.owner?.picture"></nz-list-item-meta-avatar>
+            <nz-list-item-meta-avatar
+              [nzSrc]="item.owner?.picture"
+            ></nz-list-item-meta-avatar>
             <nz-list-item-meta-title>
               {{ item.content }}
             </nz-list-item-meta-title>
             <nz-list-item-meta-description>
-              {{ item.owner?.nickname }}<br />{{ item.created_at | date:'short' }}<br />
-              <a *ngIf="item.owner?.id === profileState.data?.id && item.content !== '***DELETE***'"
-                (click)="removeMessage(item)">Remove</a>
+              {{ item.owner?.nickname }}<br />{{
+                item.created_at | date: 'short'
+              }}<br />
+              <a
+                *ngIf="
+                  item.owner?.id === profileState.data?.id &&
+                  item.content !== '***DELETE***'
+                "
+                (click)="removeMessage(item)"
+                >Remove</a
+              >
             </nz-list-item-meta-description>
           </nz-list-item-meta>
         </nz-list-item>
       </nz-list>
       <div class="input">
-        <input placeholder="Type message" nz-input [(ngModel)]="content" (keydown.enter)="send()" />
-        <button nz-button nzShape="circle" nzType="primary" [disabled]="!content" (click)="send()">
+        <input
+          placeholder="Type message"
+          nz-input
+          [(ngModel)]="content"
+          (keydown.enter)="send()"
+        />
+        <button
+          nz-button
+          nzShape="circle"
+          nzType="primary"
+          [disabled]="!content"
+          (click)="send()"
+        >
           <i nz-icon nzType="send" nzTheme="outline"></i>
         </button>
       </div>
     </div>
   </ng-template>
-
 </ng-container>

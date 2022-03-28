@@ -1,28 +1,41 @@
- <div class="panel panel-white border">
-   <div nz-row class="project-card" [nzGutter]="[10, 10]">
-     <div nz-col nzXs="24" nzMd="8" class="icon">
-       <i nz-icon nzType="project" nzTheme="outline"></i>
-     </div>
-     <div nz-col nzXs="24" nzMd="16" class="content">
-       <h3 nz-typography nzEllipsis><a style="color:black"
-           [routerLink]="['/projects', project.id]">{{ project.title }}</a></h3>
-       <div>
-         <p>
-           <nz-avatar nzIcon="user" nzShape="square" [nzSrc]="project.owner?.picture"></nz-avatar>
-            {{ project.owner?.nickname }} (owner)
-         </p>
-       </div>
-       <div *ngIf="project.participants!.length > 0">
-         <app-avatar-group [participants]="project.participants!"></app-avatar-group>
-       </div>
-       <nz-tag>
-         <i nz-icon nzType="calendar" nzTheme="outline"></i>
-         <span>Created at: {{ project.created_at | date:'short' }}</span>
-       </nz-tag>
-       <nz-divider nzPlain nzText="Description" nzOrientation="left"></nz-divider>
-       <div>
-         {{ project.description }}
-       </div>
-     </div>
-   </div>
- </div>
+<div class="panel panel-white border">
+  <div nz-row class="project-card" [nzGutter]="[10, 10]">
+    <div nz-col nzXs="24" nzMd="8" class="icon">
+      <i nz-icon nzType="project" nzTheme="outline"></i>
+    </div>
+    <div nz-col nzXs="24" nzMd="16" class="content">
+      <h3 nz-typography nzEllipsis>
+        <a style="color: black" [routerLink]="['/projects', project.id]">{{
+          project.title
+        }}</a>
+      </h3>
+      <div>
+        <p>
+          <nz-avatar
+            nzIcon="user"
+            nzShape="square"
+            [nzSrc]="project.owner?.picture"
+          ></nz-avatar>
+          {{ project.owner?.nickname }} (owner)
+        </p>
+      </div>
+      <div *ngIf="project.participants!.length > 0">
+        <app-avatar-group
+          [participants]="project.participants!"
+        ></app-avatar-group>
+      </div>
+      <nz-tag>
+        <i nz-icon nzType="calendar" nzTheme="outline"></i>
+        <span>Created at: {{ project.created_at | date: 'short' }}</span>
+      </nz-tag>
+      <nz-divider
+        nzPlain
+        nzText="Description"
+        nzOrientation="left"
+      ></nz-divider>
+      <div>
+        {{ project.description }}
+      </div>
+    </div>
+  </div>
+</div>

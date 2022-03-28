@@ -8,41 +8,41 @@ import { TaskPageComponent } from './pages/task/task.component';
 import { TaskResolver } from 'src/app/core/resolvers/task.resolver';
 import { EditProjectGuard } from 'src/app/core/guards/edit-project.guard';
 
-const routes:Routes = [
-    {
-        path: '',
-        component: ListComponent
+const routes: Routes = [
+  {
+    path: '',
+    component: ListComponent,
+  },
+  {
+    path: 'create',
+    component: EditComponent,
+  },
+  {
+    path: ':id',
+    component: DetailComponent,
+    resolve: {
+      project: ProjectResolver,
     },
-    {
-        path: 'create',
-        component: EditComponent
+  },
+  {
+    path: ':id/edit',
+    component: EditComponent,
+    canActivate: [EditProjectGuard],
+    resolve: {
+      project: ProjectResolver,
     },
-    {
-        path: ':id',
-        component: DetailComponent,
-        resolve: {
-            project: ProjectResolver
-        }
+  },
+  {
+    path: ':id/tasks/:task_id',
+    component: TaskPageComponent,
+    resolve: {
+      task: TaskResolver,
     },
-    {
-        path: ':id/edit',
-        component: EditComponent,
-        canActivate: [EditProjectGuard],
-        resolve: {
-            project: ProjectResolver
-        }
-    },
-    {
-        path: ':id/tasks/:task_id',
-        component: TaskPageComponent,
-        resolve: {
-            task: TaskResolver
-        }
-    }
+  },
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class ProjectRoutingModule{}
+export class ProjectRoutingModule {}

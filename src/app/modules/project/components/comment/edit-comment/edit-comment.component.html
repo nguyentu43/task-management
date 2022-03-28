@@ -1,15 +1,23 @@
 <ng-container *ngIf="profileState$ | async as state">
   <nz-comment>
-
-    <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="state.data?.picture"></nz-avatar>
+    <nz-avatar
+      nz-comment-avatar
+      nzIcon="user"
+      [nzSrc]="state.data?.picture"
+    ></nz-avatar>
 
     <nz-comment-content>
       <nz-form-item>
         <textarea [(ngModel)]="comment.content" nz-input rows="4"></textarea>
       </nz-form-item>
       <nz-form-item>
-        <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!comment.content"
-          (click)="handleSubmit()">
+        <button
+          nz-button
+          nzType="primary"
+          [nzLoading]="submitting"
+          [disabled]="!comment.content"
+          (click)="handleSubmit()"
+        >
           Post
         </button>
       </nz-form-item>

@@ -1,4 +1,11 @@
-import { Component, forwardRef, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BehaviorSubject, debounceTime, skipWhile, switchMap } from 'rxjs';
 import { Profile } from 'src/app/api/models';
@@ -13,54 +20,57 @@ import { EventEmitter } from '@angular/core';
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: forwardRef(() => ProfileSelectComponent)
-    }
-  ]
+      useExisting: forwardRef(() => ProfileSelectComponent),
+    },
+  ],
 })
-export class ProfileSelectComponent implements ControlValueAccessor{
-  isLoading = false
-  @Input() profiles: Profile[] = []
-  @Output() profilesChange = new EventEmitter()
-  searchChange$ = new BehaviorSubject('')
-  onChange = (value: Profile[]) => {}
-  @Input() project_id: string = ''
+export class ProfileSelectComponent implements ControlValueAccessor {
+  isLoading = false;
+  @Input() profiles: Profile[] = [];
+  @Output() profilesChange = new EventEmitter();
+  searchChange$ = new BehaviorSubject('');
+  onChange = (value: Profile[]) => {};
+  @Input() project_id: string = '';
 
-  constructor(private api:ApiService) {
-    this.searchChange$.pipe(
-      skipWhile(v => v === ''),
-      debounceTime(500),
-      switchMap(v => {
-        this.isLoading = true;
-        if(this.project_id){
-          return this.api.apiProfilesSearchList({nickname:v, email:v, project:this.project_id});
-        }
-        return this.api.apiProfilesSearchList({nickname:v, email:v});
-      })
-    )
-    .subscribe(profiles => {
-      this.profiles = profiles;
-      this.isLoading = false;
-    })
+  constructor(private api: ApiService) {
+    this.searchChange$
+      .pipe(
+        skipWhile((v) => v === ''),
+        debounceTime(500),
+        switchMap((v) => {
+          this.isLoading = true;
+          if (this.project_id) {
+            return this.api.apiProfilesSearchList({
+              nickname: v,
+              email: v,
+              project: this.project_id,
+            });
+          }
+          return this.api.apiProfilesSearchList({ nickname: v, email: v });
+        })
+      )
+      .subscribe((profiles) => {
+        this.profiles = profiles;
+        this.isLoading = false;
+      });
   }
 
-  onModelChange(profiles: Profile[]){
+  onModelChange(profiles: Profile[]) {
     this.onChange(profiles);
     this.profilesChange.emit(profiles);
   }
 
-  writeValue(obj: any): void {
-  }
+  writeValue(obj: any): void {}
 
   registerOnChange(fn: any): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
-  }
+  registerOnTouched(fn: any): void {}
 
-  onSearch(value:string){
+  onSearch(value: string) {
     this.searchChange$.next(value);
   }
 
-  compareProfile = (p1:Profile, p2:Profile) => p1?.id === p2?.id
+  compareProfile = (p1: Profile, p2: Profile) => p1?.id === p2?.id;
 }

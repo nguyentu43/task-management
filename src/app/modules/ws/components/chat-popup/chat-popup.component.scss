@@ -1,35 +1,35 @@
-.popup{
-    position: fixed;
-    bottom: 40px;
-    right: 40px;
-    [nz-button]{
-        width: 50px;
-        height: 50px;
-        i{
-            font-size: 25px;
-        }
+.popup {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  [nz-button] {
+    width: 50px;
+    height: 50px;
+    i {
+      font-size: 25px;
     }
+  }
 }
 
-.chatbox{
-    width: 300px;
-    nz-list{
-        height: 300px;
-        overflow-y: scroll;
+.chatbox {
+  width: 300px;
+  nz-list {
+    height: 300px;
+    overflow-y: scroll;
+  }
+  .input {
+    display: flex;
+    padding-top: 12px;
+    input {
+      margin-right: 5px;
     }
-    .input{
-        display: flex;
-        padding-top: 12px;
-        input{
-            margin-right: 5px;
-        }
-    }
+  }
 }
 
-.ant-list-item-meta{
-    margin-bottom: 0;
+.ant-list-item-meta {
+  margin-bottom: 0;
 }
 
-.ant-list-sm .ant-list-item{
-    padding: 5px 0;
+.ant-list-sm .ant-list-item {
+  padding: 5px 0;
 }

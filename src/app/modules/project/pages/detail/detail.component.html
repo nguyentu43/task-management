@@ -2,11 +2,25 @@
   <div class="panel panel-white header">
     <h3 nz-typography>{{ project.title }}</h3>
     <div class="action">
-      <a nz-tooltip nzTooltipTitle="Edit this project" [routerLink]="['/projects', project.id, 'edit']" [hidden]="profileState.data?.id !== project.owner?.id" nzType="primary" nz-button nzShape="circle">
+      <a
+        nz-tooltip
+        nzTooltipTitle="Edit this project"
+        [routerLink]="['/projects', project.id, 'edit']"
+        [hidden]="profileState.data?.id !== project.owner?.id"
+        nzType="primary"
+        nz-button
+        nzShape="circle"
+      >
         <i nz-icon nzType="edit" nzTheme="outline"></i>
       </a>
       <app-tags-management></app-tags-management>
-      <button nz-button nzShape="circle" nz-tooltip nzTooltipTitle="Add a section" (click)="addSection()">
+      <button
+        nz-button
+        nzShape="circle"
+        nz-tooltip
+        nzTooltipTitle="Add a section"
+        (click)="addSection()"
+      >
         <i nz-icon nzType="plus" nzTheme="outline"></i>
       </button>
     </div>
@@ -15,11 +29,17 @@
   <div class="panel panel-white sections">
     <ng-container *ngIf="!isLoading; else loadingTpl">
       <div nz-row>
-        <app-section *ngFor="let section of sections" [section]="section" (remove)="removeSection($event)"
-           [projectPk]="project.id + ''"></app-section>
+        <app-section
+          *ngFor="let section of sections"
+          [section]="section"
+          (remove)="removeSection($event)"
+          [projectPk]="project.id + ''"
+        ></app-section>
       </div>
-      <div class="panel" [hidden]="sections.length > 0" >
-        <app-empty-data description="Click + button to add a section"></app-empty-data>
+      <div class="panel" [hidden]="sections.length > 0">
+        <app-empty-data
+          description="Click + button to add a section"
+        ></app-empty-data>
       </div>
     </ng-container>
     <ng-template #loadingTpl>

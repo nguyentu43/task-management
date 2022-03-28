@@ -1,28 +1,28 @@
 @import 'src/styles/constants.scss';
 
-.project-detail{
-    min-height: $fixed-height;
-    .header{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        .action{
-            *{
-                margin: 2.5px;
-            }
-        }
-        h3{
-            margin-bottom: 0;
-        }
+.project-detail {
+  min-height: $fixed-height;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .action {
+      * {
+        margin: 2.5px;
+      }
     }
-    .sections{
-        overflow-x:scroll;
-        padding: 0;
-        [nz-row]{
-            flex-wrap: nowrap;
-            app-section{
-                flex: 0 0 350px;
-            }
-        } 
+    h3 {
+      margin-bottom: 0;
     }
+  }
+  .sections {
+    overflow-x: scroll;
+    padding: 0;
+    [nz-row] {
+      flex-wrap: nowrap;
+      app-section {
+        flex: 0 0 350px;
+      }
+    }
+  }
 }

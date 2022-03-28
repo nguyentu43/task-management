@@ -7,11 +7,8 @@ import { NzImageModule } from 'ng-zorro-antd/image';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 
-
 @NgModule({
-  declarations: [
-    WelcomeComponent
-  ],
+  declarations: [WelcomeComponent],
   imports: [
     CommonModule,
     WelcomeRoutingModule,
@@ -19,7 +16,6 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
     NzImageModule,
     NzIconModule,
     NzDividerModule,
-  ]
+  ],
 })
-export class WelcomeModule {
-}
+export class WelcomeModule {}

@@ -9,18 +9,17 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { RouterModule } from '@angular/router';
 import { ProfileSelectComponent } from './components/profile-select/profile-select.component';
-import { NzSelectModule } from 'ng-zorro-antd/select'
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { FormsModule } from '@angular/forms';
 import { ProjectCardComponent } from './components/project-card/project-card.component';
-import {NzGridModule} from 'ng-zorro-antd/grid';
-import {NzDividerModule} from 'ng-zorro-antd/divider';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { TaskComponent } from './components/task/task.component';
 import { taskStatus, TASK_STATUS } from './task-status.contants';
-import {NzToolTipModule} from 'ng-zorro-antd/tooltip';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { MdEditorComponent } from './components/md-editor/md-editor.component';
-import {NuMarkdownModule} from '@ng-util/markdown';
-
+import { NuMarkdownModule } from '@ng-util/markdown';
 
 @NgModule({
   declarations: [
@@ -29,7 +28,7 @@ import {NuMarkdownModule} from '@ng-util/markdown';
     ProfileSelectComponent,
     ProjectCardComponent,
     TaskComponent,
-    MdEditorComponent
+    MdEditorComponent,
   ],
   imports: [
     CommonModule,
@@ -46,11 +45,16 @@ import {NuMarkdownModule} from '@ng-util/markdown';
     NzIconModule,
     NzTagModule,
     NuMarkdownModule,
-    NzToolTipModule
+    NzToolTipModule,
   ],
-  providers: [
-    {provide: TASK_STATUS, useValue: taskStatus}
+  providers: [{ provide: TASK_STATUS, useValue: taskStatus }],
+  exports: [
+    MdEditorComponent,
+    EmptyComponent,
+    AvatarGroupComponent,
+    ProfileSelectComponent,
+    ProjectCardComponent,
+    TaskComponent,
   ],
-  exports: [ MdEditorComponent, EmptyComponent, AvatarGroupComponent, ProfileSelectComponent, ProjectCardComponent, TaskComponent]
 })
-export class SharedModule { }
+export class SharedModule {}

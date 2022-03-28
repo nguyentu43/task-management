@@ -1,27 +1,54 @@
 <ng-container *ngIf="profileState$ | async as profileState">
   <ng-container *ngIf="isEdit === true; else readTpl">
-    <app-edit-comment (afterSubmit)="afterEdit($event)" [comment]="comment"></app-edit-comment>
+    <app-edit-comment
+      (afterSubmit)="afterEdit($event)"
+      [comment]="comment"
+    ></app-edit-comment>
   </ng-container>
   <ng-template #readTpl>
-    <nz-comment [nzAuthor]="comment?.owner?.nickname" [nzDatetime]="comment?.created_at">
-      <nz-avatar nz-comment-avatar nzIcon="user" [nzSrc]="comment?.owner?.picture"></nz-avatar>
+    <nz-comment
+      [nzAuthor]="comment?.owner?.nickname"
+      [nzDatetime]="comment?.created_at"
+    >
+      <nz-avatar
+        nz-comment-avatar
+        nzIcon="user"
+        [nzSrc]="comment?.owner?.picture"
+      ></nz-avatar>
       <nz-comment-content>
-        {{comment?.content}}
+        {{ comment?.content }}
       </nz-comment-content>
-      <nz-comment-action >
-        
-        <span class="count like" (click)="like(profileState.data?.id!)"><i nz-tooltip nzTitle="Like" nz-icon nzType="like"
-          [nzTheme]="comment.likes?.length ?? 0 > 0 ? 'twotone' : 'outline'"></i>{{ comment.likes?.length }}</span>
+      <nz-comment-action>
+        <span class="count like" (click)="like(profileState.data?.id!)"
+          ><i
+            nz-tooltip
+            nzTitle="Like"
+            nz-icon
+            nzType="like"
+            [nzTheme]="comment.likes?.length ?? 0 > 0 ? 'twotone' : 'outline'"
+          ></i
+          >{{ comment.likes?.length }}</span
+        >
       </nz-comment-action>
       <ng-template [ngIf]="profileState.data?.id === comment.owner?.id">
-        <nz-comment-action><span (click)="edit()">Edit</span></nz-comment-action>
-        <nz-comment-action><span nz-popconfirm nzPopconfirmTitle="Do you want to delete?" nzPopconfirmTrigger="click"
-            (nzOnConfirm)="remove()">Remove</span></nz-comment-action>
-        <nz-comment-action *ngIf="comment.likes?.includes(profileState.data?.id + '')">
+        <nz-comment-action
+          ><span (click)="edit()">Edit</span></nz-comment-action
+        >
+        <nz-comment-action
+          ><span
+            nz-popconfirm
+            nzPopconfirmTitle="Do you want to delete?"
+            nzPopconfirmTrigger="click"
+            (nzOnConfirm)="remove()"
+            >Remove</span
+          ></nz-comment-action
+        >
+        <nz-comment-action
+          *ngIf="comment.likes?.includes(profileState.data?.id + '')"
+        >
           <span (click)="unlike(profileState.data?.id!)">Unlike</span>
         </nz-comment-action>
       </ng-template>
-
     </nz-comment>
   </ng-template>
 </ng-container>

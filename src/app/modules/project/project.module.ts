@@ -23,31 +23,30 @@ import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
-import {NzTagModule} from 'ng-zorro-antd/tag';
-import {NzSpaceModule} from 'ng-zorro-antd/space';
+import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { UploadFileComponent } from './components/upload-file/upload-file.component';
 import { ActivitiesComponent } from './components/activities/activities.component';
 import { NzTimelineModule } from 'ng-zorro-antd/timeline';
-import {NzSpinModule} from 'ng-zorro-antd/spin';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { TodoInputComponent } from './components/todo/todo-input/todo-input.component';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import {NzCheckboxModule} from 'ng-zorro-antd/checkbox';
-import {NzProgressModule} from 'ng-zorro-antd/progress';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { TagsManagementComponent } from './components/tags-management/tags-management.component';
 import { ColorPickerComponent } from './components/color-picker/color-picker.component';
-import {NzPopconfirmModule} from 'ng-zorro-antd/popconfirm';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { CommentComponent } from './components/comment/comment/comment.component';
 import { EditCommentComponent } from './components/comment/edit-comment/edit-comment.component';
 import { BoxCommentComponent } from './components/comment/box-comment/box-comment.component';
 import { TaskPageComponent } from './pages/task/task.component';
 import { TodoListComponent } from './components/todo/todo-list/todo-list.component';
-import {NzCommentModule} from 'ng-zorro-antd/comment';
-import {NzListModule} from 'ng-zorro-antd/list';
+import { NzCommentModule } from 'ng-zorro-antd/comment';
+import { NzListModule } from 'ng-zorro-antd/list';
 import { DndModule } from 'ngx-drag-drop';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
-import {NzBadgeModule} from 'ng-zorro-antd/badge';
-
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 
 @NgModule({
   declarations: [
@@ -101,7 +100,7 @@ import {NzBadgeModule} from 'ng-zorro-antd/badge';
     NzToolTipModule,
     NzTagModule,
     NzListModule,
-    DndModule
-  ]
+    DndModule,
+  ],
 })
-export class ProjectModule { }
+export class ProjectModule {}

@@ -1,4 +1,8 @@
 <div>
-    <app-edit-comment (afterSubmit)="addComment($event)"></app-edit-comment>
-    <app-comment *ngFor="let comment of comments" (remove)="removeComment($event)" [comment]="comment"></app-comment>
+  <app-edit-comment (afterSubmit)="addComment($event)"></app-edit-comment>
+  <app-comment
+    *ngFor="let comment of comments"
+    (remove)="removeComment($event)"
+    [comment]="comment"
+  ></app-comment>
 </div>

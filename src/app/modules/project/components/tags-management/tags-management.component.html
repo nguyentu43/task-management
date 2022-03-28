@@ -1,24 +1,49 @@
-<a nzShape="circle" nz-tooltip nzTooltipTitle="Tags" nzDanger nz-button (click)="showModal()">
+<a
+  nzShape="circle"
+  nz-tooltip
+  nzTooltipTitle="Tags"
+  nzDanger
+  nz-button
+  (click)="showModal()"
+>
   <i nz-icon nzType="tag" nzTheme="outline"></i>
 </a>
-<nz-modal [nzWidth]="500" [(nzVisible)]="isVisible" (nzOnCancel)="handleCancel()" [nzTitle]="'Tags management'">
+<nz-modal
+  [nzWidth]="500"
+  [(nzVisible)]="isVisible"
+  (nzOnCancel)="handleCancel()"
+  [nzTitle]="'Tags management'"
+>
   <ng-container *nzModalContent>
-    <button (click)="addTag()" nz-button style="margin-bottom: 10px">Add a tag</button>
+    <button (click)="addTag()" nz-button style="margin-bottom: 10px">
+      Add a tag
+    </button>
     <div nz-row nzGutter="2" *ngFor="let tag of tags" class="management">
       <div nz-col nzFlex="3" class="left">
-        <p nz-typography nzEditable [nzContent]="tag.name" (nzContentChange)="changeTag(setTag(tag, {name: $event}))"></p>
+        <p
+          nz-typography
+          nzEditable
+          [nzContent]="tag.name"
+          (nzContentChange)="changeTag(setTag(tag, { name: $event }))"
+        ></p>
         <div>
-          <app-color-picker [color]="tag.color" (colorChange)="changeTag(setTag(tag, {color: $event}))">
+          <app-color-picker
+            [color]="tag.color"
+            (colorChange)="changeTag(setTag(tag, { color: $event }))"
+          >
           </app-color-picker>
         </div>
       </div>
       <div nz-col nzFlex="1" class="right">
-        <i nz-icon nzType="delete"
-        nz-popconfirm
-        nzPopconfirmTitle="Do you want to delete?"
-        nzPopconfirmTrigger="click"
-        (nzOnConfirm)="removeTag(tag.id + '')"
-        nzTheme="outline"></i>
+        <i
+          nz-icon
+          nzType="delete"
+          nz-popconfirm
+          nzPopconfirmTitle="Do you want to delete?"
+          nzPopconfirmTrigger="click"
+          (nzOnConfirm)="removeTag(tag.id + '')"
+          nzTheme="outline"
+        ></i>
       </div>
     </div>
   </ng-container>

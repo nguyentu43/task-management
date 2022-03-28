@@ -1,23 +1,23 @@
 <nz-upload
-[nzBeforeUpload]="beforeUpload"
-[(nzFileList)]="attachments"
-[nzRemove]="handleRemove"
+  [nzBeforeUpload]="beforeUpload"
+  [(nzFileList)]="attachments"
+  [nzRemove]="handleRemove"
 >
-    <button nz-button>
-        <i nz-icon nzType="upload"></i>
-        Choose file to upload
-    </button>
+  <button nz-button>
+    <i nz-icon nzType="upload"></i>
+    Choose file to upload
+  </button>
 </nz-upload>
 <div style="margin-top: 15px" *ngIf="loading">
-    <nz-spin nzSimple></nz-spin>
+  <nz-spin nzSimple></nz-spin>
 </div>
 <button
-    nz-button
-    [nzType]="'primary'"
-    [nzLoading]="uploading"
-    (click)="handleUpload()"
-    [disabled]="attachments.length === 0"
-    style="margin-top: 16px"
+  nz-button
+  [nzType]="'primary'"
+  [nzLoading]="uploading"
+  (click)="handleUpload()"
+  [disabled]="attachments.length === 0"
+  style="margin-top: 16px"
 >
-    {{ uploading ? 'Uploading' : 'Start Upload' }}
+  {{ uploading ? 'Uploading' : 'Start Upload' }}
 </button>

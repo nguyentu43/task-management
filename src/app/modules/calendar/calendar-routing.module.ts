@@ -1,16 +1,16 @@
-import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
-import{EventListComponent} from './pages/event-list/event-list.component'
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { EventListComponent } from './pages/event-list/event-list.component';
 
-const routes:Routes = [
-    {
-        path: '',
-        component: EventListComponent
-    }
+const routes: Routes = [
+  {
+    path: '',
+    component: EventListComponent,
+  },
 ];
 
 @NgModule({
-    imports: [RouterModule.forChild(routes)],
-    exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule],
 })
-export class CalendarRoutingModule{}
+export class CalendarRoutingModule {}

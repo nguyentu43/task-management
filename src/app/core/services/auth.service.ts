@@ -8,10 +8,8 @@ import * as ProfileActions from '../../store/profile/profile.actions';
 import { ApiService } from 'src/app/api/services';
 import { NzMessageService } from 'ng-zorro-antd/message';
 
-
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-
   userProfile: any;
   requestedScopes: string = 'openid profile email';
 
@@ -21,48 +19,52 @@ export class AuthService {
     responseType: 'token',
     audience: environment.auth0Audience,
     redirectUri: environment.auth0RedirectUri,
-    scope: this.requestedScopes
+    scope: this.requestedScopes,
   });
 
-  constructor(private router: Router, private store:Store<AppState>, 
-    private api:ApiService, private message: NzMessageService) {}
+  constructor(
+    private router: Router,
+    private store: Store<AppState>,
+    private api: ApiService,
+    private message: NzMessageService
+  ) {}
 
   public login(): void {
     this.auth0.authorize();
   }
 
   public handleAuthentication(): void {
-
     this.auth0.parseHash((err, authResult) => {
       if (authResult?.accessToken) {
         this.setSession(authResult);
-        this.api.apiProfilesCreate()
-        .subscribe(profile => {
+        this.api.apiProfilesCreate().subscribe((profile) => {
           this.router.navigate(['/']);
           this.store.dispatch(ProfileActions.loadProfileSuccess(profile));
-        })
+        });
       } else if (err) {
         this.router.navigate(['/']);
         this.message.error(err.error);
       }
     });
 
-    if(!window.location.hash && this.isAuthenticated()){
+    if (!window.location.hash && this.isAuthenticated()) {
       this.store.dispatch(ProfileActions.loadProfile());
     }
   }
 
   private setSession(authResult: auth0.Auth0DecodedHash): void {
-    const expiresAt = JSON.stringify((authResult.expiresIn! * 1000) + new Date().getTime());
+    const expiresAt = JSON.stringify(
+      authResult.expiresIn! * 1000 + new Date().getTime()
+    );
     localStorage.setItem('access_token', authResult.accessToken!);
     localStorage.setItem('expires_at', expiresAt);
   }
 
   public logout(): void {
-    this.removeToken();  
+    this.removeToken();
     this.auth0.logout({
       clientID: environment.auth0ClientId,
-      returnTo: environment.auth0RedirectUri
+      returnTo: environment.auth0RedirectUri,
     });
   }
 

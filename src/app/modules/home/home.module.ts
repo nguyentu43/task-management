@@ -5,20 +5,17 @@ import { HomeRoutingModule } from './home-routing.module';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { NzSkeletonModule } from 'ng-zorro-antd/skeleton'
-
+import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
 
 @NgModule({
-  declarations: [
-    DashboardComponent
-  ],
+  declarations: [DashboardComponent],
   imports: [
     CommonModule,
     HomeRoutingModule,
     NzTypographyModule,
     NzGridModule,
     SharedModule,
-    NzSkeletonModule
-  ]
+    NzSkeletonModule,
+  ],
 })
-export class HomeModule { }
+export class HomeModule {}

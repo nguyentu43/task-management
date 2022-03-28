@@ -1,26 +1,35 @@
-<div *ngIf="!loading; else loadingTpl" nz-row [nzGutter]="[10,10]" class="dashboard">
+<div
+  *ngIf="!loading; else loadingTpl"
+  nz-row
+  [nzGutter]="[10, 10]"
+  class="dashboard"
+>
   <div nz-col nzXs="24" nzMd="8">
     <div class="panel-primary panel">
-      <h3 nz-typography style="color:white">{{ nowDateTime | date:'fullDate' }}</h3>
+      <h3 nz-typography style="color: white">
+        {{ nowDateTime | date: 'fullDate' }}
+      </h3>
       <div class="big-text">{{ nowDateTime | date: 'hh:mm:ss' }}</div>
     </div>
     <div class="panel-success panel">
       <a routerLink="/projects">
-        <h3 nz-typography style="color:white">Projects</h3>
+        <h3 nz-typography style="color: white">Projects</h3>
         <div class="big-text">{{ projects.length }}</div>
       </a>
     </div>
     <div class="panel-dark panel">
-      <h3 nz-typography style="color:white">Tasks</h3>
+      <h3 nz-typography style="color: white">Tasks</h3>
       <div class="big-text">{{ tasks.length }}</div>
     </div>
   </div>
   <div nz-col nzXs="24" nzMd="16">
     <div class="panel panel-danger">
-      <h3 nz-typography style="color:white;">Tasks</h3>
+      <h3 nz-typography style="color: white">Tasks</h3>
       <div [hidden]="tasks.length > 0" class="panel panel-white">
-          <app-empty-data description="Create a new project to add some task" [link]="['/projects/create']"
-            ></app-empty-data>
+        <app-empty-data
+          description="Create a new project to add some task"
+          [link]="['/projects/create']"
+        ></app-empty-data>
       </div>
       <div class="tasks">
         <app-task *ngFor="let task of tasks" [task]="task"></app-task>
@@ -30,7 +39,7 @@
 </div>
 
 <ng-template #loadingTpl>
-  <div nz-row [nzGutter]="[10,10]">
+  <div nz-row [nzGutter]="[10, 10]">
     <div nz-col nzXs="24" nzMd="8">
       <div class="panel panel-white">
         <nz-skeleton></nz-skeleton>

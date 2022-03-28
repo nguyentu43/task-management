@@ -26,13 +26,11 @@ import { NuMarkdownModule } from '@ng-util/markdown';
 registerLocaleData(en);
 
 const ngHttpCachingConfig: NgHttpCachingConfig = {
-  lifetime: 1000 * 20
+  lifetime: 1000 * 20,
 };
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -47,13 +45,13 @@ const ngHttpCachingConfig: NgHttpCachingConfig = {
       maxAge: 25,
     }),
     EffectsModule.forRoot([ProfileEffects]),
-    NuMarkdownModule.forRoot()
+    NuMarkdownModule.forRoot(),
   ],
   providers: [
-    { provide: NZ_I18N, useValue: en_US }, 
+    { provide: NZ_I18N, useValue: en_US },
     { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,5 +1,5 @@
 <div class="panel panel-white">
-  <ng-container *ngIf="!project.id else editProject">
+  <ng-container *ngIf="!project.id; else editProject">
     <h2 nz-typography>Create a project</h2>
   </ng-container>
   <ng-template #editProject>

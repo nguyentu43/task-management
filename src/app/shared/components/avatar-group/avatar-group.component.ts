@@ -4,15 +4,12 @@ import { Profile } from 'src/app/api/models';
 @Component({
   selector: 'app-avatar-group',
   templateUrl: './avatar-group.component.html',
-  styleUrls: ['./avatar-group.component.scss']
+  styleUrls: ['./avatar-group.component.scss'],
 })
 export class AvatarGroupComponent implements OnInit {
+  @Input() participants: Profile[] = [];
 
-  @Input() participants: Profile[] = []
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

@@ -1,16 +1,16 @@
 @import 'src/styles/constants.scss';
 
-.list-project{
-    min-height: $fixed-height;
-    .header{
-        display: flex;
-        justify-content: space-between;
-        background-color: white;
-        margin-bottom:10px;
-        padding: 10px;
-        align-items: center;
-        h2[nz-typography]{
-            margin-bottom: 0;
-        }
+.list-project {
+  min-height: $fixed-height;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    margin-bottom: 10px;
+    padding: 10px;
+    align-items: center;
+    h2[nz-typography] {
+      margin-bottom: 0;
     }
+  }
 }

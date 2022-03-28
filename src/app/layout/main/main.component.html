@@ -1,36 +1,60 @@
-  <nz-layout *ngIf="profileState$ | async as profileState" id="main">
-    <nz-sider nzCollapsible nzBreakpoint="lg" [nzCollapsedWidth]="0" [hidden]="!profileState.isLogin">
-      <ul nz-menu nzTheme="dark" nzMode="inline">
-        <li nz-menu-item *ngFor="let item of menu" [routerLink]="item.link" nzMatchRouterExact nzMatchRouter>
-          <i nz-icon [nzType]="item.icon"></i>
-          <span>{{item.title}}</span>
-        </li>
-      </ul>
-    </nz-sider>
-    <nz-layout>
-      <nz-header>
-          <app-activites-popup [hidden]="!profileState.isLogin" style="margin-right: 20px"></app-activites-popup>
-          <div [hidden]="!profileState.isLogin">
-            <nz-button-group>
-              <button nz-button>{{ profileState.data?.nickname }}</button>
-              <button nz-button nz-dropdown [nzDropdownMenu]="menu1" nzPlacement="bottomRight">
-                <nz-avatar nzIcon="user" nzShape="square" nzSize="small" [nzSrc]="profileState.data?.picture">
-                </nz-avatar>
-              </button>
-            </nz-button-group>
-            <nz-dropdown-menu #menu1="nzDropdownMenu">
-              <ul nz-menu>
-                <li nz-menu-item (click)="logout()">Logout</li>
-              </ul>
-            </nz-dropdown-menu>
-          </div>
-      </nz-header>
-      <nz-content>
-        <router-outlet></router-outlet>
-      </nz-content>
-      <nz-footer>
-          <strong>Task Management ({{ now | date: 'YYYY' }})</strong>
-      </nz-footer>
-    </nz-layout>
+<nz-layout *ngIf="profileState$ | async as profileState" id="main">
+  <nz-sider
+    nzCollapsible
+    nzBreakpoint="lg"
+    [nzCollapsedWidth]="0"
+    [hidden]="!profileState.isLogin"
+  >
+    <ul nz-menu nzTheme="dark" nzMode="inline">
+      <li
+        nz-menu-item
+        *ngFor="let item of menu"
+        [routerLink]="item.link"
+        nzMatchRouterExact
+        nzMatchRouter
+      >
+        <i nz-icon [nzType]="item.icon"></i>
+        <span>{{ item.title }}</span>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header>
+      <app-activites-popup
+        [hidden]="!profileState.isLogin"
+        style="margin-right: 20px"
+      ></app-activites-popup>
+      <div [hidden]="!profileState.isLogin">
+        <nz-button-group>
+          <button nz-button>{{ profileState.data?.nickname }}</button>
+          <button
+            nz-button
+            nz-dropdown
+            [nzDropdownMenu]="menu1"
+            nzPlacement="bottomRight"
+          >
+            <nz-avatar
+              nzIcon="user"
+              nzShape="square"
+              nzSize="small"
+              [nzSrc]="profileState.data?.picture"
+            >
+            </nz-avatar>
+          </button>
+        </nz-button-group>
+        <nz-dropdown-menu #menu1="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item (click)="logout()">Logout</li>
+          </ul>
+        </nz-dropdown-menu>
+      </div>
+    </nz-header>
+    <nz-content>
+      <router-outlet></router-outlet>
+    </nz-content>
+    <nz-footer>
+      <strong>Task Management ({{ now | date: 'YYYY' }})</strong>
+    </nz-footer>
   </nz-layout>
-  <app-chat-popup></app-chat-popup>
+</nz-layout>
+<app-chat-popup></app-chat-popup>

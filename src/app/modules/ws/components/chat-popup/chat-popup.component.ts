@@ -1,6 +1,16 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, AfterViewChecked, Inject, AfterContentInit, OnDestroy, ViewChildren, QueryList, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import {  NavigationEnd, Router } from '@angular/router';
+import {
+  Component,
+  AfterViewChecked,
+  Inject,
+  AfterContentInit,
+  OnDestroy,
+  ViewChildren,
+  QueryList,
+  AfterViewInit,
+  ChangeDetectorRef,
+} from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { filter, Observable, Subscription } from 'rxjs';
 import { Message } from 'src/app/api/models';
@@ -13,58 +23,59 @@ import { ProfileState } from 'src/app/store/profile/profile.reducer';
 @Component({
   selector: 'app-chat-popup',
   templateUrl: './chat-popup.component.html',
-  styleUrls: ['./chat-popup.component.scss']
+  styleUrls: ['./chat-popup.component.scss'],
 })
 export class ChatPopupComponent implements OnDestroy, AfterViewInit {
-
-  showButton = false
-  messageCount = 0
-  messageSubscription?: Subscription
-  messages: Message[] = []
-  content = ''
-  isVisible = false
-  offset = 0
-  projectId = ''
-  limit= 10
-  loading = false
-  profileState$: Observable<ProfileState>
-  isEnd = false
-  @ViewChildren('messages') viewMessages!:QueryList<any>
-  viewMessagesSubscription?: Subscription
+  showButton = false;
+  messageCount = 0;
+  messageSubscription?: Subscription;
+  messages: Message[] = [];
+  content = '';
+  isVisible = false;
+  offset = 0;
+  projectId = '';
+  limit = 10;
+  loading = false;
+  profileState$: Observable<ProfileState>;
+  isEnd = false;
+  @ViewChildren('messages') viewMessages!: QueryList<any>;
+  viewMessagesSubscription?: Subscription;
 
   constructor(
     private router: Router,
-    private store:Store<AppState>,
-    @Inject(DOCUMENT) private document:Document,
-    private auth:AuthService,
-    private ref:ChangeDetectorRef,
-    private ws:WebSocketService, private api:ApiService) {
+    private store: Store<AppState>,
+    @Inject(DOCUMENT) private document: Document,
+    private auth: AuthService,
+    private ref: ChangeDetectorRef,
+    private ws: WebSocketService,
+    private api: ApiService
+  ) {
+    this.profileState$ = store.select((state) => state.profile);
 
-    this.profileState$ = store.select(state => state.profile);
-    
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event:any) => {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        if (!auth.isAuthenticated()) {
+          return;
+        }
 
-      if(!auth.isAuthenticated()){
-        return;
-      }
-      
-      this.showButton = /^\/projects\/[0-9]+$/.test(event.url);
-      if(!this.showButton) return;
-      this.projectId = event.url.replace('/projects/', '');
-      this.isEnd = false;
+        this.showButton = /^\/projects\/[0-9]+$/.test(event.url);
+        if (!this.showButton) return;
+        this.projectId = event.url.replace('/projects/', '');
+        this.isEnd = false;
 
-      this.ws.disconnectChatWs();
-      this.offset = 0;
-      this.ws.connectChatWs(this.projectId);
-      this.getMessages();
-      this.messageSubscription = this.ws.chatObservable().subscribe(message => {
-        this.messages = this.messages.concat(message);
-        if(!this.isVisible) this.messageCount++;
-        this.subscribeChangeMessages();
+        this.ws.disconnectChatWs();
+        this.offset = 0;
+        this.ws.connectChatWs(this.projectId);
+        this.getMessages();
+        this.messageSubscription = this.ws
+          .chatObservable()
+          .subscribe((message) => {
+            this.messages = this.messages.concat(message);
+            if (!this.isVisible) this.messageCount++;
+            this.subscribeChangeMessages();
+          });
       });
-    });
   }
 
   ngAfterViewInit(): void {
@@ -84,44 +95,49 @@ export class ChatPopupComponent implements OnDestroy, AfterViewInit {
   getMessages() {
     this.loading = true;
     this.viewMessagesSubscription?.unsubscribe();
-    this.api.apiProjectsMessagesList({
-      projectPk: this.projectId,
-      offset: this.offset,
-      limit: this.limit
-    })
-      .subscribe(data => {
+    this.api
+      .apiProjectsMessagesList({
+        projectPk: this.projectId,
+        offset: this.offset,
+        limit: this.limit,
+      })
+      .subscribe((data) => {
         this.offset += data.results.length;
-        this.messages = [...data.results.reverse(),...this.messages];
-        if(data.results.length === 0) {this.isEnd = true;}
+        this.messages = [...data.results.reverse(), ...this.messages];
+        if (data.results.length === 0) {
+          this.isEnd = true;
+        }
         this.loading = false;
       });
   }
 
-  send(){
+  send() {
     this.viewMessagesSubscription?.unsubscribe();
-    this.ws.chatSend({content: this.content});
+    this.ws.chatSend({ content: this.content });
     this.content = '';
   }
 
-  scrollToBottom(){
-    const lastItem = this.document.querySelector('.chatbox nz-list-item:last-child');
+  scrollToBottom() {
+    const lastItem = this.document.querySelector(
+      '.chatbox nz-list-item:last-child'
+    );
     lastItem?.scrollIntoView({
-      behavior:'smooth'
+      behavior: 'smooth',
     });
   }
 
-  removeMessage(message:any){
-    this.api.apiProjectsMessagesUpdate({
-      projectPk: this.projectId,
-      id:message.id,
-      data: {
-        content: "***DELETE***"
-      }
-    })
-    .subscribe((data) => {
-      const index = this.messages.findIndex(ms => ms.id === message.id);
-      this.messages.splice(index, 1, data)
-    })
+  removeMessage(message: any) {
+    this.api
+      .apiProjectsMessagesUpdate({
+        projectPk: this.projectId,
+        id: message.id,
+        data: {
+          content: '***DELETE***',
+        },
+      })
+      .subscribe((data) => {
+        const index = this.messages.findIndex((ms) => ms.id === message.id);
+        this.messages.splice(index, 1, data);
+      });
   }
-
 }

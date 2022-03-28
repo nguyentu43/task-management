@@ -1,7 +1,4 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
@@ -13,45 +10,51 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-index',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.scss']
+  styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-
-  menu = [{
+  menu = [
+    {
       title: 'Dashboard',
       icon: 'home',
-      link: '/home'
-    },
-      {
-        title: 'Create a project',
-        icon: 'plus-circle',
-        link: '/projects/create'
-      }, {
-        title: 'Your projects',
-        icon: 'unordered-list',
-        link: '/projects'
-      
+      link: '/home',
     },
     {
-      title: 'Calendar', icon:'calendar', link: '/calendar'
-    }
-  ]
+      title: 'Create a project',
+      icon: 'plus-circle',
+      link: '/projects/create',
+    },
+    {
+      title: 'Your projects',
+      icon: 'unordered-list',
+      link: '/projects',
+    },
+    {
+      title: 'Calendar',
+      icon: 'calendar',
+      link: '/calendar',
+    },
+  ];
 
-  profileState$: Observable<ProfileState> = this.store.select(state=> state.profile)
+  profileState$: Observable<ProfileState> = this.store.select(
+    (state) => state.profile
+  );
 
-  now = new Date()
+  now = new Date();
 
-  constructor(public auth: AuthService, private store: Store<AppState>, private router: Router) {
-  }
+  constructor(
+    public auth: AuthService,
+    private store: Store<AppState>,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {}
 
-  logout(){
-    if(this.auth.isAuthenticated()){
+  logout() {
+    if (this.auth.isAuthenticated()) {
       this.auth.logout();
       this.store.dispatch(ProfileActions.clearProfile());
-      this.router.navigate(["/"]);
+      this.router.navigate(['/']);
     }
   }
-
 }
