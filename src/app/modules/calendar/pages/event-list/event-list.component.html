@@ -16,7 +16,7 @@
           <nz-badge
             nzStatus="processing"
             (click)="goToTask(item.task)"
-            [nzText]="item.title + isBeforeNow(item.due_datetime)"
+            [nzText]="item.title + (item.is_done ? isBeforeNow(item.due_datetime) : '')"
           ></nz-badge>
         </li>
       </ng-container>
@@ -27,7 +27,7 @@
           <nz-badge
             nzStatus="warning"
             (click)="goToTask(item)"
-            [nzText]="item.title + isBeforeNow(item.due_datetime)"
+            [nzText]="item.title + (item.status === 'UnComplete' ? isBeforeNow(item.due_datetime) : '')"
           ></nz-badge>
         </li>
       </ng-container>

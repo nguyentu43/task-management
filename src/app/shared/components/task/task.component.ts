@@ -16,6 +16,6 @@ export class TaskComponent implements OnInit {
 
   public isBeforeNow(date: string) {
     const dueDt = parseISO(date);
-    return isBefore(dueDt, new Date());
+    return isBefore(dueDt, new Date()) && this.task.status === 'UnComplete';
   }
 }
