@@ -1,5 +1,5 @@
 <div class="list-project">
-  <ng-container *ngIf="api.apiProjectsList() | async as projects; else loading">
+  <ng-container *ngIf="loading; else loading">
     <ng-container *ngIf="projects.length > 0; else empty">
       <div class="header">
         <h2 nz-typography>Your projects</h2>
@@ -21,10 +21,10 @@
       </div>
     </ng-container>
     <ng-template #empty>
-      <app-empty-data
+      <div class="panel panel-white"><app-empty-data
         description="Create a new project"
         [routerLink]="['/projects/create']"
-      ></app-empty-data>
+      ></app-empty-data></div>
     </ng-template>
   </ng-container>
   <ng-template #loading>

@@ -18,8 +18,6 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { TaskComponent } from './components/task/task.component';
 import { taskStatus, TASK_STATUS } from './task-status.contants';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
-import { MdEditorComponent } from './components/md-editor/md-editor.component';
-import { NuMarkdownModule } from '@ng-util/markdown';
 
 @NgModule({
   declarations: [
@@ -28,7 +26,6 @@ import { NuMarkdownModule } from '@ng-util/markdown';
     ProfileSelectComponent,
     ProjectCardComponent,
     TaskComponent,
-    MdEditorComponent,
   ],
   imports: [
     CommonModule,
@@ -44,12 +41,10 @@ import { NuMarkdownModule } from '@ng-util/markdown';
     FormsModule,
     NzIconModule,
     NzTagModule,
-    NuMarkdownModule,
     NzToolTipModule,
   ],
   providers: [{ provide: TASK_STATUS, useValue: taskStatus }],
   exports: [
-    MdEditorComponent,
     EmptyComponent,
     AvatarGroupComponent,
     ProfileSelectComponent,

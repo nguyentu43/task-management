@@ -20,9 +20,14 @@
         tag.name
       }}</nz-tag>
     </div>
-    <nz-tag nzColor="warning">
-      <i nz-icon nzType="calendar" nzTheme="outline"></i>
-      {{ task?.due_datetime | date: 'short' }}
-    </nz-tag>
+    <div *ngIf="task?.due_datetime">
+      <nz-tag nzColor="warning">
+        <i nz-icon nzType="calendar" nzTheme="outline"></i>
+        {{ task?.due_datetime | date: 'short' }}
+      </nz-tag>
+      <nz-tag nzColor="red" *ngIf="isBeforeNow(task?.due_datetime!)" style="margin-left: 5px">
+        Overdue
+      </nz-tag>
+    </div>
   </div>
 </div>

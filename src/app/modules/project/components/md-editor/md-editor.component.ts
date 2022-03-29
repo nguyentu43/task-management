@@ -1,5 +1,4 @@
 import {
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -38,7 +37,7 @@ export class MdEditorComponent implements OnInit {
     ],
   };
 
-  constructor(private ref: ChangeDetectorRef) {}
+  constructor() {}
 
   ngOnInit(): void {}
 }

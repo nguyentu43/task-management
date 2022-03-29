@@ -47,9 +47,12 @@ import { NzListModule } from 'ng-zorro-antd/list';
 import { DndModule } from 'ngx-drag-drop';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { NuMarkdownModule } from '@ng-util/markdown';
+import { MdEditorComponent } from './components/md-editor/md-editor.component';
 
 @NgModule({
   declarations: [
+    MdEditorComponent,
     ListComponent,
     EditComponent,
     DetailComponent,
@@ -80,6 +83,7 @@ import { NzBadgeModule } from 'ng-zorro-antd/badge';
     NzInputModule,
     ReactiveFormsModule,
     NzBreadCrumbModule,
+    NuMarkdownModule,
     NzDatePickerModule,
     NzProgressModule,
     NzSelectModule,

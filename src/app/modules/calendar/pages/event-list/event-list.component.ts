@@ -1,8 +1,9 @@
-import { formatDate } from '@angular/common';
-import { Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Task, TodoItem } from 'src/app/api/models';
+import { Task } from 'src/app/api/models';
 import { ApiService } from 'src/app/api/services';
+import { isBefore, parseISO, format } from 'date-fns';
+
 
 @Component({
   selector: 'app-event-list',
@@ -14,7 +15,6 @@ export class EventListComponent implements OnInit {
   taskMap: any = {};
   constructor(
     private api: ApiService,
-    @Inject(LOCALE_ID) private locale: string,
     private router: Router
   ) {}
 
@@ -22,15 +22,13 @@ export class EventListComponent implements OnInit {
     this.api.apiTodoItemsList().subscribe((data) => {
       const todoMap: any = {};
       for (let todo of data) {
-        const date = formatDate(
-          todo.due_datetime ?? todo.created_at!,
-          'dd/MM/YYYY',
-          this.locale
+        const date = format(
+          parseISO(todo.due_datetime ?? todo.created_at!),
+          'dd/MM/yyyy'
         );
-        const month = formatDate(
-          todo.due_datetime ?? todo.created_at!,
-          'MM/YYYY',
-          this.locale
+        const month = format(
+          parseISO(todo.due_datetime ?? todo.created_at!),
+          'MM/yyyy'
         );
         if (!todoMap[date]) todoMap[date] = [];
         if (!todoMap[month]) todoMap[month] = [];
@@ -43,15 +41,13 @@ export class EventListComponent implements OnInit {
     this.api.apiTasksList().subscribe((data) => {
       const taskMap: any = {};
       for (let task of data) {
-        const date = formatDate(
-          task.due_datetime ?? task.created_at!,
-          'dd/MM/YYYY',
-          this.locale
+        const date = format(
+         parseISO( task.due_datetime ?? task.created_at!),
+          'dd/MM/yyyy'
         );
-        const month = formatDate(
-          task.due_datetime ?? task.created_at!,
-          'MM/YYYY',
-          this.locale
+        const month = format(
+          parseISO(task.due_datetime ?? task.created_at!),
+          'MM/yyyy'
         );
         if (!taskMap[date]) taskMap[date] = [];
         if (!taskMap[month]) taskMap[month] = [];
@@ -62,11 +58,17 @@ export class EventListComponent implements OnInit {
     });
   }
 
-  getItemsFromMap(dataMap: any, date: string, format: string) {
-    return dataMap[formatDate(date, format, this.locale)];
+  getItemsFromMap(dataMap: any, date: Date, formatStr: string) {
+    return dataMap[format(date, formatStr)];
   }
 
   goToTask(task: Task) {
     this.router.navigate([`/projects/${task?.project?.id}/tasks/${task?.id}`]);
+  }
+
+  public isBeforeNow(date?:string){
+    if(!date) return '';
+    const dueDt = parseISO(date);
+    return isBefore(dueDt, new Date()) ? ' (Overdue)' : '';
   }
 }
