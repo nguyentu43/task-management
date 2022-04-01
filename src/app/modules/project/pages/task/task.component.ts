@@ -26,6 +26,7 @@ export class TaskPageComponent implements OnInit {
   profileState$: Observable<ProfileState>;
   tagsState$: Observable<TagsState>;
   taskChange$ = new BehaviorSubject<Task | null>(null);
+  range_date: string[] | null = null;
 
   constructor(
     private store: Store<AppState>,
@@ -36,6 +37,8 @@ export class TaskPageComponent implements OnInit {
     @Inject(TASK_STATUS) public colors: any
   ) {
     this.task = route.snapshot.data['task'];
+    
+    this.setRangeDate(this.task);
 
     this.profileState$ = store.select((state) => state.profile);
     this.tagsState$ = store.select((state) => state.tags);
@@ -61,8 +64,18 @@ export class TaskPageComponent implements OnInit {
       )
       .subscribe((task) => {
         this.task = task;
+        this.setRangeDate(task);
         this.message.success('Task was saved');
       });
+  }
+
+  private setRangeDate(task:Task) {
+    if (task.start_datetime && task.end_datetime) {
+      this.range_date = [task.start_datetime, task.end_datetime];
+    }
+    else {
+      this.range_date = null;
+    }
   }
 
   ngOnInit(): void {}
@@ -91,4 +104,5 @@ export class TaskPageComponent implements OnInit {
         this.router.navigate(['/projects', this.task.project?.id]);
       });
   }
+
 }

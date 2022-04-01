@@ -3,7 +3,7 @@ import { Profile } from './profile';
 import { Task } from './task';
 export interface TodoItem {
   created_at?: string;
-  due_datetime?: string;
+  due_datetime?: null | string;
   id?: number;
   is_done?: boolean;
   owner?: Profile;

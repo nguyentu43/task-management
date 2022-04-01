@@ -20,9 +20,15 @@
         tag.name
       }}</nz-tag>
     </div>
+    <div *ngIf="task?.start_datetime">
+      <nz-tag>
+        <i nz-icon nzType="calendar" nzTheme="outline"></i>
+        Schedule: {{ task?.start_datetime | date: 'shortDate' }} - {{ task?.end_datetime | date: 'shortDate' }}
+      </nz-tag>
+    </div>
     <div *ngIf="task?.due_datetime">
       <nz-tag nzColor="warning">
-        <i nz-icon nzType="calendar" nzTheme="outline"></i>
+        <i nz-icon nzType="field-time" nzTheme="outline"></i>
         {{ task?.due_datetime | date: 'short' }}
       </nz-tag>
       <nz-tag

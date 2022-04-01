@@ -79,6 +79,14 @@
           <nz-avatar nzShape="square" [nzSrc]="task.owner?.picture"></nz-avatar>
           {{ task.owner?.nickname }}
         </div>
+
+        <nz-divider
+          nzOrientation="left"
+          nzText="Schedule"
+          nzPlain
+        ></nz-divider>
+        <nz-range-picker [ngModel]="range_date" (ngModelChange)="changeTask(setTask({ start_datetime: $event[0], end_datetime: $event[1] }))"></nz-range-picker>
+
         <nz-divider
           nzOrientation="left"
           nzText="Due datetime"
