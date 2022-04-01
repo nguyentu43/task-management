@@ -16,12 +16,15 @@ import { AuthService } from '../services/auth.service';
   providedIn: 'root',
 })
 export class EditProjectGuard implements CanActivate {
-  constructor(private store: Store<AppState>, private api: ApiService, private router:Router) {}
+  constructor(
+    private store: Store<AppState>,
+    private api: ApiService,
+    private router: Router
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot,
-    
+    state: RouterStateSnapshot
   ):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
@@ -38,7 +41,7 @@ export class EditProjectGuard implements CanActivate {
           ])
         ),
         map(([project, state]) => {
-          if(project.owner?.id === state.data?.id) return true;
+          if (project.owner?.id === state.data?.id) return true;
           this.router.navigate(['/403']);
           return false;
         })

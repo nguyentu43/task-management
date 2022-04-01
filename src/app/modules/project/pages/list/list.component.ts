@@ -8,14 +8,14 @@ import { ApiService } from 'src/app/api/services';
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements OnInit {
-  loading = false
-  projects: Project[] = []
+  loading = false;
+  projects: Project[] = [];
   constructor(public api: ApiService) {}
 
   ngOnInit(): void {
-    this.loading=true;
-    this.api.apiProjectsList().subscribe(data=>{
-      this.loading=false;
+    this.loading = true;
+    this.api.apiProjectsList().subscribe((data) => {
+      this.loading = false;
       this.projects = data;
     });
   }

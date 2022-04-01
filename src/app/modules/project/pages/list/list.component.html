@@ -21,10 +21,12 @@
       </div>
     </ng-container>
     <ng-template #empty>
-      <div class="panel panel-white"><app-empty-data
-        description="Create a new project"
-        [routerLink]="['/projects/create']"
-      ></app-empty-data></div>
+      <div class="panel panel-white">
+        <app-empty-data
+          description="Create a new project"
+          [routerLink]="['/projects/create']"
+        ></app-empty-data>
+      </div>
     </ng-template>
   </ng-container>
   <ng-template #loading>

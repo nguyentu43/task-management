@@ -1,9 +1,4 @@
-import {
-  Component,
-  Inject,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { parseISO, isBefore } from 'date-fns';
 import { Task } from 'src/app/api/models';
 import { TASK_STATUS } from '../../task-status.contants';
@@ -19,7 +14,7 @@ export class TaskComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  public isBeforeNow(date:string){
+  public isBeforeNow(date: string) {
     const dueDt = parseISO(date);
     return isBefore(dueDt, new Date());
   }

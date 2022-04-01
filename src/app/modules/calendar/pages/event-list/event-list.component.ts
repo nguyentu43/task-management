@@ -4,7 +4,6 @@ import { Task } from 'src/app/api/models';
 import { ApiService } from 'src/app/api/services';
 import { isBefore, parseISO, format } from 'date-fns';
 
-
 @Component({
   selector: 'app-event-list',
   templateUrl: './event-list.component.html',
@@ -13,10 +12,7 @@ import { isBefore, parseISO, format } from 'date-fns';
 export class EventListComponent implements OnInit {
   todoMap: any = {};
   taskMap: any = {};
-  constructor(
-    private api: ApiService,
-    private router: Router
-  ) {}
+  constructor(private api: ApiService, private router: Router) {}
 
   ngOnInit(): void {
     this.api.apiTodoItemsList().subscribe((data) => {
@@ -42,7 +38,7 @@ export class EventListComponent implements OnInit {
       const taskMap: any = {};
       for (let task of data) {
         const date = format(
-         parseISO( task.due_datetime ?? task.created_at!),
+          parseISO(task.due_datetime ?? task.created_at!),
           'dd/MM/yyyy'
         );
         const month = format(
@@ -66,8 +62,8 @@ export class EventListComponent implements OnInit {
     this.router.navigate([`/projects/${task?.project?.id}/tasks/${task?.id}`]);
   }
 
-  public isBeforeNow(date?:string){
-    if(!date) return '';
+  public isBeforeNow(date?: string) {
+    if (!date) return '';
     const dueDt = parseISO(date);
     return isBefore(dueDt, new Date()) ? ' (Overdue)' : '';
   }
