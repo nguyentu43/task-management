@@ -1,4 +1,4 @@
-<div class="panel panel-white border">
+<div class="panel panel-white">
   <div nz-row class="project-card" [nzGutter]="[10, 10]">
     <div nz-col nzXs="24" nzMd="8" class="icon">
       <i nz-icon nzType="project" nzTheme="outline"></i>
@@ -34,7 +34,7 @@
         nzOrientation="left"
       ></nz-divider>
       <div>
-        {{ project.description }}
+        {{ project.description ?? "No description" }}
       </div>
     </div>
   </div>

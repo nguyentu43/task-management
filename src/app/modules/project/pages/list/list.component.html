@@ -1,7 +1,7 @@
 <div class="list-project">
   <ng-container *ngIf="loading; else loading">
     <ng-container *ngIf="projects.length > 0; else empty">
-      <div class="header">
+      <div class="panel header">
         <h2 nz-typography>Your projects</h2>
         <a
           nz-button
@@ -32,22 +32,22 @@
   <ng-template #loading>
     <div nz-row [nzGutter]="[10, 10]">
       <div nz-col nzXs="24" nzMd="12">
-        <div class="panel panel-white border">
+        <div class="panel panel-white">
           <nz-skeleton></nz-skeleton>
         </div>
       </div>
       <div nz-col nzXs="24" nzMd="12">
-        <div class="panel panel-white border">
+        <div class="panel panel-white">
           <nz-skeleton></nz-skeleton>
         </div>
       </div>
       <div nz-col nzXs="24" nzMd="12">
-        <div class="panel panel-white border">
+        <div class="panel panel-white">
           <nz-skeleton></nz-skeleton>
         </div>
       </div>
       <div nz-col nzXs="24" nzMd="12">
-        <div class="panel panel-white border">
+        <div class="panel panel-white">
           <nz-skeleton></nz-skeleton>
         </div>
       </div>

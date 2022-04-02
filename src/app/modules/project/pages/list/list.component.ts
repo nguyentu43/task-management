@@ -8,7 +8,7 @@ import { ApiService } from 'src/app/api/services';
   styleUrls: ['./list.component.scss'],
 })
 export class ListComponent implements OnInit {
-  loading = false;
+  loading = true;
   projects: Project[] = [];
   constructor(public api: ApiService) {}
 

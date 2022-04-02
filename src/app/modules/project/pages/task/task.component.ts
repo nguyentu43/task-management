@@ -37,7 +37,7 @@ export class TaskPageComponent implements OnInit {
     @Inject(TASK_STATUS) public colors: any
   ) {
     this.task = route.snapshot.data['task'];
-    
+
     this.setRangeDate(this.task);
 
     this.profileState$ = store.select((state) => state.profile);
@@ -69,11 +69,10 @@ export class TaskPageComponent implements OnInit {
       });
   }
 
-  private setRangeDate(task:Task) {
+  private setRangeDate(task: Task) {
     if (task.start_datetime && task.end_datetime) {
       this.range_date = [task.start_datetime, task.end_datetime];
-    }
-    else {
+    } else {
       this.range_date = null;
     }
   }
@@ -104,5 +103,4 @@ export class TaskPageComponent implements OnInit {
         this.router.navigate(['/projects', this.task.project?.id]);
       });
   }
-
 }
