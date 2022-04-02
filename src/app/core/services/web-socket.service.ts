@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 export class WebSocketService {
   private chatWs$?: WebSocketSubject<any>;
   private activitiesWs$?: WebSocketSubject<any>;
-  retryTime = 5000;
+  retryTime = 1000 * 20;
 
   constructor(private message: NzMessageService) {}
 

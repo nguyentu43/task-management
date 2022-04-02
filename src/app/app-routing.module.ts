@@ -32,11 +32,11 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'calendar',
+        path: '',
         canActivate: [AuthGuard],
         loadChildren: () =>
-          import('./modules/calendar/calendar.module').then(
-            (m) => m.CalendarModule
+          import('./modules/statistic/statistic.module').then(
+            (m) => m.StatisticModule
           ),
       },
       {

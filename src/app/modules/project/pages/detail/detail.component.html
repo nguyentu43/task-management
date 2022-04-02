@@ -26,6 +26,11 @@
     </div>
   </div>
 
+  <div class="panel panel-white" *ngIf="project.participants!.length > 0">
+    <nz-divider nzPlain nzText="Participants" nzOrientation="left"></nz-divider>
+    <app-avatar-group [participants]="project.participants!"></app-avatar-group>
+  </div>
+
   <div class="panel panel-white sections">
     <ng-container *ngIf="!isLoading; else loadingTpl">
       <div nz-row>

@@ -1,0 +1,26 @@
+<div class="panel panel-white timeline">
+  <h2>Tasks Timeline</h2>
+  <div style="margin-bottom: 10px">
+    <nz-date-picker
+      [nzAllowClear]="false"
+      [(ngModel)]="month"
+      nzMode="month"
+      nzFormat="MM/yyyy"
+    ></nz-date-picker>
+    <button
+      nz-button
+      nzType="primary"
+      style="margin-left: 10px"
+      (click)="filterTasks()"
+    >
+      Filter
+    </button>
+  </div>
+  <div *ngIf="timelineChart.dataTable.length > 1; else empty">
+    <google-chart
+      [data]="timelineChart"
+      (chartSelect)="clickTask($event)"
+    ></google-chart>
+  </div>
+  <ng-template #empty>Choose another month</ng-template>
+</div>

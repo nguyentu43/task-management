@@ -28,6 +28,7 @@
     "mobile-drag-drop": "^2.3.0-rc.2",
     "ng-http-caching": "^13.0.4",
     "ng-zorro-antd": "^13.1.1",
+    "ng2-google-charts": "^7.0.0",
     "ngx-drag-drop": "^13.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

@@ -34,6 +34,11 @@ export class MainComponent implements OnInit {
       icon: 'calendar',
       link: '/calendar',
     },
+    {
+      title: 'Timeline',
+      icon: 'pic-right',
+      link: '/timeline',
+    },
   ];
 
   profileState$: Observable<ProfileState> = this.store.select(
