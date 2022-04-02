@@ -46,7 +46,7 @@ export class TimelineComponent implements OnInit {
       });
 
       if (this.sameMonthTasks.length === 0) {
-        this.message.info('No tasks are in this month');
+        this.message.info('No tasks are in this month. Choose another month');
         return;
       }
 
