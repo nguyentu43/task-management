@@ -49,9 +49,11 @@
         </nz-dropdown-menu>
       </div>
     </nz-header>
-    <nz-content>
-      <router-outlet></router-outlet>
-    </nz-content>
+    <nz-spin [nzSpinning]="loading">
+      <nz-content>
+        <router-outlet></router-outlet>
+      </nz-content>
+    </nz-spin> 
     <nz-footer>
       <strong>Task Management ({{ now | date: 'YYYY' }})</strong>
     </nz-footer>

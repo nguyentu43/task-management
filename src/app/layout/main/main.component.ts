@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 import { AppState } from 'src/app/store/app.reducer';
 import { ProfileState } from 'src/app/store/profile/profile.reducer';
 import * as ProfileActions from 'src/app/store/profile/profile.actions';
-import { Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-index',
@@ -46,12 +46,23 @@ export class MainComponent implements OnInit {
   );
 
   now = new Date();
+  loading = true;
 
   constructor(
     public auth: AuthService,
     private store: Store<AppState>,
     private router: Router
-  ) {}
+  ) {
+    router.events.subscribe((event) => {
+      if(event instanceof NavigationStart){
+        this.loading = true;
+      }
+
+      if(event instanceof NavigationEnd){
+        this.loading = false;
+      }
+    });
+  }
 
   ngOnInit(): void {}
 

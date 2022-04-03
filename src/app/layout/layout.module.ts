@@ -14,6 +14,7 @@ import { RouterModule } from '@angular/router';
 import { WsModule } from '../modules/ws/ws.module';
 import { NzResultModule } from 'ng-zorro-antd/result';
 import { ErrorComponent } from './error/error.component';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 @NgModule({
   declarations: [MainComponent, ErrorComponent],
@@ -27,6 +28,7 @@ import { ErrorComponent } from './error/error.component';
     NzDropDownModule,
     NzButtonModule,
     NzToolTipModule,
+    NzSpinModule,
     NzAvatarModule,
     RouterModule,
     WsModule,
