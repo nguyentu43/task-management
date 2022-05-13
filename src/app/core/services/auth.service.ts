@@ -38,7 +38,7 @@ export class AuthService {
       if (authResult?.accessToken) {
         this.setSession(authResult);
         this.api.apiProfilesCreate().subscribe((profile) => {
-          this.router.navigate(['/']);
+          this.router.navigate(['/home']);
           this.store.dispatch(ProfileActions.loadProfileSuccess(profile));
         });
       } else if (err) {

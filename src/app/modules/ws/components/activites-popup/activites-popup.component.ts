@@ -38,7 +38,7 @@ export class ActivitesPopupComponent implements OnInit, OnDestroy {
     this.activitesSubscription = ws
       .activitiesObservable()
       .subscribe((activity) => {
-        this.activites = this.activites.concat({
+        this.activites.unshift({
           ...activity,
           task: { id: activity.task },
         });

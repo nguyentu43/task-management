@@ -54,11 +54,11 @@ export class MainComponent implements OnInit {
     private router: Router
   ) {
     router.events.subscribe((event) => {
-      if(event instanceof NavigationStart){
+      if (event instanceof NavigationStart) {
         this.loading = true;
       }
 
-      if(event instanceof NavigationEnd){
+      if (event instanceof NavigationEnd) {
         this.loading = false;
       }
     });

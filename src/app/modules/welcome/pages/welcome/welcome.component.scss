@@ -1,7 +1,7 @@
 @import 'src/styles/constants.scss';
 
 .welcome-page {
-  height: $fixed-height;
+  min-height: $fixed-height;
   display: flex;
   justify-content: center;
   flex-flow: column;
